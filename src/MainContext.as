@@ -5,7 +5,7 @@ package
 	
 	public class MainContext extends Context 
 	{
-		public function MainContext(contextView:flash.display.DisplayObjectContainer=null, autoStartup:Boolean=true) 
+		public function MainContext(contextView:DisplayObjectContainer=null, autoStartup:Boolean=true) 
 		{
 			super(contextView, autoStartup);
 		}
