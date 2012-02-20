@@ -1,21 +1,14 @@
 package 
 {
 	import flash.display.Sprite;
-	import flash.events.Event;
 	
 	public class Main extends Sprite 
 	{
+		protected var mainContext:MainContext;
+		
 		public function Main():void 
 		{
-			if (stage)
-				init();
-			else
-				addEventListener(Event.ADDED_TO_STAGE, _this_ADDED_TO_STAGE);
-		}
-		
-		private function _this_ADDED_TO_STAGE(event:Event=null):void 
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, _this_ADDED_TO_STAGE);
+			mainContext = new MainContext(this);
 		}
 	}
 }
