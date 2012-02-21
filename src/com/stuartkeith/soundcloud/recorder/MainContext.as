@@ -1,6 +1,6 @@
 package com.stuartkeith.soundcloud.recorder 
 {
-	import com.stuartkeith.soundcloud.recorder.command.ProcessQueryParametersCommand;
+	import com.stuartkeith.soundcloud.recorder.command.ProcessQueryStringCommand;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.MainContext;
 	import com.stuartkeith.soundcloud.recorder.mediator.MainMediator;
@@ -21,7 +21,7 @@ package com.stuartkeith.soundcloud.recorder
 			mediatorMap.mapView(MainView, MainMediator);
 			
 			// map framework events to commands
-			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryParametersCommand);
+			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);
 			
 			// call super (this will dispatch STARTUP_COMPLETE).
 			super.startup();
