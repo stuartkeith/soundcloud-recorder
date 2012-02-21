@@ -1,6 +1,7 @@
 package 
 {
-	import com.stuartkeith.soundcloud.recorder.MainView;
+	import com.stuartkeith.soundcloud.recorder.MainContext;
+	import com.stuartkeith.soundcloud.recorder.view.MainView;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	

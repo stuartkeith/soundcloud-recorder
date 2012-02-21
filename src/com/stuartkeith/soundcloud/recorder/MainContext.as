@@ -1,8 +1,9 @@
-package  
+package com.stuartkeith.soundcloud.recorder 
 {
-	import com.stuartkeith.soundcloud.recorder.MainView;
+	import com.stuartkeith.soundcloud.recorder.MainContext;
+	import com.stuartkeith.soundcloud.recorder.mediator.MainMediator;
+	import com.stuartkeith.soundcloud.recorder.view.MainView;
 	import flash.display.DisplayObjectContainer;
-	import mediator.MainMediator;
 	import org.robotlegs.mvcs.Context;
 	
 	public class MainContext extends Context 
