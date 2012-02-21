@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="MainView" itemID="4f4341f1-00000014" linkageExportForAS="true" linkageBaseClass="flash.display.Sprite" linkageClassName="com.stuartkeith.soundcloud.recorder.view.MainView_design" lastModified="1329819623" lastUniqueIdentifier="1" isSpriteSubclass="true">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Exported/MainView" itemID="4f4341f1-00000014" linkageExportForAS="true" linkageBaseClass="flash.display.Sprite" linkageClassName="com.stuartkeith.soundcloud.recorder.view.MainView_design" lastModified="1329819623" lastUniqueIdentifier="1" isSpriteSubclass="true">
   <timeline>
     <DOMTimeline name="MainView">
       <layers>
