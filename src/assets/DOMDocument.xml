@@ -7,7 +7,7 @@
      </media>
      <symbols>
           <Include href="ConnectButton.xml" itemIcon="0" loadImmediate="false" itemID="4f4372b9-0000003a" lastModified="1329820457"/>
-          <Include href="Exported/AuthorisationView.xml" itemID="4f437329-00000042" lastModified="1329821244"/>
+          <Include href="Exported/AuthorisationView.xml" itemID="4f437329-00000042" lastModified="1329822477"/>
           <Include href="Exported/MainView.xml" itemID="4f4341f1-00000014" lastModified="1329820607"/>
           <Include href="Marker.xml" loadImmediate="false" itemID="4f4344f2-00000017" lastModified="1329808626"/>
      </symbols>
@@ -26,6 +26,7 @@
      </timelines>
      <PrinterSettings/>
      <publishHistory>
+          <PublishItem publishSize="4729" publishTime="1329821247"/>
           <PublishItem publishSize="4725" publishTime="1329821163"/>
           <PublishItem publishSize="4725" publishTime="1329821047"/>
           <PublishItem publishSize="492279" publishTime="1329821018"/>

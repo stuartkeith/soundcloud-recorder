@@ -37,7 +37,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			mainView_design.header.text = "Authorisation Needed";
 			
 			var authorisationView:AuthorisationView = new AuthorisationView();
-			authorisationView.text.text = "Before you begin recording, please authorise this application " +
+			authorisationView.textField.text = "Before you begin recording, please authorise this application " +
 					"with SoundCloud so you can upload your sounds to your SoundCloud account.";
 			
 			changeChildView(authorisationView);

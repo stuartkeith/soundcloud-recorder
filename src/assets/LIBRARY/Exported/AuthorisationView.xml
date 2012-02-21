@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Exported/AuthorisationView" itemID="4f437329-00000042" linkageExportForAS="true" linkageBaseClass="flash.display.Sprite" linkageClassName="com.stuartkeith.soundcloud.recorder.view.AuthorisationView" lastModified="1329821244" isSpriteSubclass="true">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Exported/AuthorisationView" itemID="4f437329-00000042" linkageExportForAS="true" linkageBaseClass="flash.display.Sprite" linkageClassName="com.stuartkeith.soundcloud.recorder.view.AuthorisationView" lastModified="1329822477" isSpriteSubclass="true">
   <timeline>
     <DOMTimeline name="AuthorisationView">
       <layers>
@@ -14,7 +14,7 @@
                     <Point/>
                   </transformationPoint>
                 </DOMSymbolInstance>
-                <DOMDynamicText name="text" selected="true" fontRenderingMode="standard" width="476" height="124" isSelectable="false" lineType="multiline">
+                <DOMDynamicText name="textField" fontRenderingMode="standard" width="476" height="124" isSelectable="false" lineType="multiline">
                   <matrix>
                     <Matrix tx="2" ty="2"/>
                   </matrix>
