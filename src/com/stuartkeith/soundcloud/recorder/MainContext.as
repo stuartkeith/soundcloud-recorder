@@ -8,6 +8,7 @@ package com.stuartkeith.soundcloud.recorder
 	import com.stuartkeith.soundcloud.recorder.mediator.MainMediator;
 	import com.stuartkeith.soundcloud.recorder.view.ConnectButton;
 	import com.stuartkeith.soundcloud.recorder.view.MainView;
+	import com.stuartkeith.soundcloud.recorder.vo.SoundCloudConfigurationVO;
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.mvcs.Context;
 	
@@ -20,6 +21,10 @@ package com.stuartkeith.soundcloud.recorder
 		
 		override public function startup():void 
 		{
+			// create a SoundCloudConfigurationVO and inject it as a singleton for use in commands
+			var soundCloudConfigurationVO:SoundCloudConfigurationVO = new SoundCloudConfigurationVO(contextView.loaderInfo.parameters);
+			injector.mapValue(SoundCloudConfigurationVO, soundCloudConfigurationVO);
+			
 			// map views to mediators
 			mediatorMap.mapView(MainView, MainMediator);
 			mediatorMap.mapView(ConnectButton, ConnectButtonMediator);

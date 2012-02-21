@@ -11,6 +11,13 @@
 		};
 		
 		var flashvars = {
+			soundCloudClientID: "b6812c7c576cc7613712d5d0a20e220f",
+			// always redirect back to this URI
+			// use empty string if undefined
+			soundCloudRedirectURI: (window.location.origin || "") + (window.location.pathname || ""),
+			// SoundCloud's authorisation URL as a template
+			// must contain $CLIENT_ID$ and $REDIRECT_URI$ to be parsed properly
+			soundCloudAuthorisationURLTemplate: "https://soundcloud.com/connect?client_id=$CLIENT_ID$&response_type=token&redirect_uri=$REDIRECT_URI$"
 		};
 		
 		var params = {
