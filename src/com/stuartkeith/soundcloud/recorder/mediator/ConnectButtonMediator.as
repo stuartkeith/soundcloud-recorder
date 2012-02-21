@@ -1,5 +1,7 @@
 package com.stuartkeith.soundcloud.recorder.mediator 
 {
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -12,7 +14,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		
 		protected function onMouseEvent(event:MouseEvent):void 
 		{
-			
+			dispatch(new Event(FrameworkEvent.CONNECT_TO_SOUNDCLOUD));
 		}
 	}
 }
