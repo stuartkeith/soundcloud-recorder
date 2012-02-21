@@ -13,8 +13,7 @@
 		var flashvars = {
 			soundCloudClientID: "b6812c7c576cc7613712d5d0a20e220f",
 			// always redirect back to this URI
-			// use empty string if undefined
-			soundCloudRedirectURI: (window.location.origin || "") + (window.location.pathname || ""),
+			soundCloudRedirectURI: window.location.protocol + "//" + window.location.hostname + window.location.pathname,
 			// SoundCloud's authorisation URL as a template
 			// must be escaped - otherwise special characters can be cut off when read by Flash
 			// must contain $CLIENT_ID$ and $REDIRECT_URI$ to be parsed properly
