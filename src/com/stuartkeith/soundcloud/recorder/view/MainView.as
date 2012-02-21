@@ -32,6 +32,17 @@ package com.stuartkeith.soundcloud.recorder.view
 			}
 		}
 		
+		public function showAuthorisationError(error:String, errorDescription:String):void
+		{
+			mainView_design.header.text = "Authorisation Error";
+			
+			var authorisationView:AuthorisationView = new AuthorisationView();
+			authorisationView.textField.text = "There was a problem with your authorisation. " +
+					"SoundCloud said, '" + errorDescription + "' Try again?";
+			
+			changeChildView(authorisationView);
+		}
+		
 		public function showAuthorisationView():void
 		{
 			mainView_design.header.text = "Authorisation Needed";
