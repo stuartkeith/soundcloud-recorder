@@ -1,5 +1,6 @@
 package com.stuartkeith.soundcloud.recorder 
 {
+	import com.stuartkeith.soundcloud.recorder.command.NavigateToSoundCloudAuthorisationURLCommand;
 	import com.stuartkeith.soundcloud.recorder.command.ProcessQueryStringCommand;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.MainContext;
@@ -25,6 +26,7 @@ package com.stuartkeith.soundcloud.recorder
 			
 			// map framework events to commands
 			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);
+			commandMap.mapEvent(FrameworkEvent.CONNECT_TO_SOUNDCLOUD, NavigateToSoundCloudAuthorisationURLCommand);
 			
 			// call super (this will dispatch STARTUP_COMPLETE).
 			super.startup();
