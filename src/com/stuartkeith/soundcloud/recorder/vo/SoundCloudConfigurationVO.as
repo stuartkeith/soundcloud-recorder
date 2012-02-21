@@ -2,9 +2,10 @@ package com.stuartkeith.soundcloud.recorder.vo
 {
 	public class SoundCloudConfigurationVO 
 	{
+		public var accessToken:String;
+		public var authorisationURL:String;
 		public var clientID:String;
 		public var redirectURI:String;
-		public var authorisationURL:String;
 		
 		public function SoundCloudConfigurationVO(parameters:Object)
 		{
