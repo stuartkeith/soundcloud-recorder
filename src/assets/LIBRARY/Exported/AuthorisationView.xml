@@ -1,4 +1,4 @@
-<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Exported/AuthorisationView" itemID="4f437329-00000042" linkageExportForAS="true" linkageBaseClass="flash.display.Sprite" linkageClassName="com.stuartkeith.soundcloud.recorder.view.AuthorisationView" lastModified="1329822477" isSpriteSubclass="true">
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="Exported/AuthorisationView" itemID="4f437329-00000042" linkageExportForAS="true" linkageBaseClass="flash.display.Sprite" linkageClassName="com.stuartkeith.soundcloud.recorder.view.AuthorisationView" lastModified="1329822602" isSpriteSubclass="true">
   <timeline>
     <DOMTimeline name="AuthorisationView">
       <layers>
@@ -6,7 +6,7 @@
           <frames>
             <DOMFrame index="0" keyMode="9728">
               <elements>
-                <DOMSymbolInstance libraryItemName="ConnectButton" name="connectButton" symbolType="button">
+                <DOMSymbolInstance libraryItemName="Exported/ConnectButton" name="connectButton" symbolType="button">
                   <matrix>
                     <Matrix tx="119" ty="142"/>
                   </matrix>
