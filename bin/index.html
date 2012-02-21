@@ -6,8 +6,10 @@
 	<script src="js/swfobject.js"></script>
 	<script>
 		var getQueryString = function () {
-			// not implemented yet - will read query string to determine
-			// whether user has authorised the application.
+			if (window.location.search) {
+				// we don't need the "?" character
+				return window.location.search.substr(1);
+			}
 		};
 		
 		var flashvars = {
