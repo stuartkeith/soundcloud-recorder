@@ -1,8 +1,10 @@
 package com.stuartkeith.soundcloud.recorder.command 
 {
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.AuthorisationError;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import flash.events.Event;
 	import flash.external.ExternalInterface;
+	import flash.net.URLVariables;
 	import org.robotlegs.mvcs.Command;
 	
 	public class ProcessQueryStringCommand extends Command 
@@ -17,13 +19,24 @@ package com.stuartkeith.soundcloud.recorder.command
 		{
 			var queryString:String = ExternalInterface.call("getQueryString");
 			
-			if (!queryString)
+			if (queryString)
 			{
-				// if the querystring is empty then we need to prompt the user
-				// to authorise.
+				// convert the queryString into a urlVariables for easy access.
+				var urlVariables:URLVariables = new URLVariables(queryString);
 				
-				dispatch(new Event(FrameworkEvent.AUTHORISATION_REQUIRED));
+				if (urlVariables.error)
+				{
+					dispatch(new AuthorisationError(AuthorisationError.AUTHORISATION_ERROR,
+							urlVariables.error, urlVariables.error_description));
+					
+					return;
+				}
 			}
+			
+			// if we get this far then either the querystring was blank or there has
+			// been an unforeseen error, so we'll ask the user to authorise.
+			
+			dispatch(new Event(FrameworkEvent.AUTHORISATION_REQUIRED));
 		}
 	}
 }
