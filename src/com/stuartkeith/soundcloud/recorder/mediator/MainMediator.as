@@ -11,7 +11,14 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		
 		override public function onRegister():void 
 		{
+			addContextListener(FrameworkEvent.AUTHORISATION_REQUIRED, authorisationRequired, Event);
+			
 			dispatch(new Event(FrameworkEvent.APPLICATION_READY));
+		}
+		
+		protected function authorisationRequired(event:Event):void 
+		{
+			mainView.showAuthorisationView();
 		}
 	}
 }

@@ -2,8 +2,13 @@
      <folders>
           <DOMFolderItem name="Exported" itemID="4f437223-00000032" isExpanded="true"/>
      </folders>
+     <media>
+          <DOMBitmapItem name="soundcloud-connect.png" itemID="4f4372c6-0000003f" sourceExternalFilepath="./LIBRARY/soundcloud-connect.png" sourceLastImported="1329815856" externalFileSize="3809" useImportedJPEGData="false" compressionType="lossless" originalCompressionType="lossless" quality="50" href="soundcloud-connect.png" bitmapDataHRef="M 1 1329820321.dat" frameRight="4840" frameBottom="580"/>
+     </media>
      <symbols>
-          <Include href="Exported/MainView.xml" itemID="4f4341f1-00000014" lastModified="1329819623"/>
+          <Include href="ConnectButton.xml" itemIcon="0" loadImmediate="false" itemID="4f4372b9-0000003a" lastModified="1329820457"/>
+          <Include href="Exported/AuthorisationView.xml" itemID="4f437329-00000042" lastModified="1329821244"/>
+          <Include href="Exported/MainView.xml" itemID="4f4341f1-00000014" lastModified="1329820607"/>
           <Include href="Marker.xml" loadImmediate="false" itemID="4f4344f2-00000017" lastModified="1329808626"/>
      </symbols>
      <timelines>
@@ -21,6 +26,15 @@
      </timelines>
      <PrinterSettings/>
      <publishHistory>
+          <PublishItem publishSize="4725" publishTime="1329821163"/>
+          <PublishItem publishSize="4725" publishTime="1329821047"/>
+          <PublishItem publishSize="492279" publishTime="1329821018"/>
+          <PublishItem publishSize="4725" publishTime="1329820992"/>
+          <PublishItem publishSize="4713" publishTime="1329820843"/>
+          <PublishItem publishSize="4707" publishTime="1329820814"/>
+          <PublishItem publishSize="4706" publishTime="1329820633"/>
+          <PublishItem publishSize="4709" publishTime="1329820392"/>
+          <PublishItem publishSize="1138" publishTime="1329820231"/>
           <PublishItem publishSize="1139" publishTime="1329819625"/>
           <PublishItem publishSize="1122" publishTime="1329809038"/>
           <PublishItem publishSize="1081" publishTime="1329808681"/>
