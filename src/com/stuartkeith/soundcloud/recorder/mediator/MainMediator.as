@@ -14,6 +14,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		{
 			addContextListener(AuthorisationError.AUTHORISATION_ERROR, authorisationError, AuthorisationError);
 			addContextListener(FrameworkEvent.AUTHORISATION_REQUIRED, authorisationRequired, Event);
+			addContextListener(FrameworkEvent.AUTHORISATION_SUCCESSFUL, authorisationSuccessful, Event);
 			
 			dispatch(new Event(FrameworkEvent.APPLICATION_READY));
 		}
@@ -26,6 +27,11 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		protected function authorisationRequired(event:Event):void 
 		{
 			mainView.showAuthorisationView();
+		}
+		
+		protected function authorisationSuccessful(event:Event):void 
+		{
+			mainView.showRecordingView();
 		}
 	}
 }

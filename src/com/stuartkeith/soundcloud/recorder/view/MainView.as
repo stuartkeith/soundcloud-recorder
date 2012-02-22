@@ -36,5 +36,10 @@ package com.stuartkeith.soundcloud.recorder.view
 		{
 			changeChildView(new AuthorisationView(this));
 		}
+		
+		public function showRecordingView():void
+		{
+			
+		}
 	}
 }
