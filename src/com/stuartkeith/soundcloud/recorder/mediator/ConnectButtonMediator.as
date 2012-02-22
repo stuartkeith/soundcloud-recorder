@@ -9,10 +9,10 @@ package com.stuartkeith.soundcloud.recorder.mediator
 	{
 		override public function onRegister():void 
 		{
-			addViewListener(MouseEvent.CLICK, onMouseEvent, MouseEvent);
+			addViewListener(MouseEvent.CLICK, CLICK_listener, MouseEvent);
 		}
 		
-		protected function onMouseEvent(event:MouseEvent):void 
+		protected function CLICK_listener(event:MouseEvent):void 
 		{
 			dispatch(new Event(FrameworkEvent.CONNECT_TO_SOUNDCLOUD));
 		}
