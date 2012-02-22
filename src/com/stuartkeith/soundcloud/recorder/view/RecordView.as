@@ -12,14 +12,19 @@ package com.stuartkeith.soundcloud.recorder.view
 		// list of possible states this view supports, for use by mediator
 		// usage: recordView.changeState(RecordView.STATE_INITIAL);
 		public static const STATE_INITIAL:String = "stateInitial";
+		public static const STATE_RECORDING:String = "stateRecording";
+		public static const STATE_RECORDED:String = "stateRecorded";
 		
 		// list of events this view dispatches (components are not accessed directly by mediator)
 		public static const EVENT_RECORD:String = "eventRecord";
+		public static const EVENT_RECORD_STOP:String = "eventRecordStop";
 		
 		// maps states with events for the record button
 		// if a match is not found, no event is dispatched
 		protected static const recordButtonEventTypes:Object = {
-			"stateInitial": "eventRecord"
+			"stateInitial": "eventRecord",
+			"stateRecording": "eventRecordStop",
+			"stateRecorded": "eventRecord"
 		};
 		
 		// as above, but maps states with events for the play button
@@ -28,7 +33,9 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		// maps states to a desired window title
 		protected static const stateTitles:Object = {
-			"stateInitial": "Record a Sound"
+			"stateInitial": "Record a Sound",
+			"stateRecording": "Recording a Sound...",
+			"stateRecorded": "Recorded a Sound"
 		};
 		
 		// set the currentState to the initial state
@@ -95,12 +102,12 @@ package com.stuartkeith.soundcloud.recorder.view
 			title = stateTitles[currentState] || "";
 			
 			// set the record button's properties for the current state
-			recordButton.enabled = currentState == STATE_INITIAL;
-			recordButton.selected = false;
+			recordButton.enabled = true;
+			recordButton.selected = currentState == STATE_RECORDING;
 			recordButton.label = recordButton.selected ? "Stop" : "Record";
 			
 			// set the play button's properties for the current state
-			playButton.enabled = false;
+			playButton.enabled = currentState == STATE_RECORDED;
 			playButton.selected = false;
 			playButton.label = playButton.selected ? "Stop" : "Play";
 			
