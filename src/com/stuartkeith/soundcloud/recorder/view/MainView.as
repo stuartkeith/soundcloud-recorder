@@ -39,7 +39,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		public function showRecordingView():void
 		{
-			
+			changeChildView(new RecordView(this));
 		}
 	}
 }
