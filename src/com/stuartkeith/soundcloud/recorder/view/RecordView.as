@@ -14,10 +14,13 @@ package com.stuartkeith.soundcloud.recorder.view
 		public static const STATE_INITIAL:String = "stateInitial";
 		public static const STATE_RECORDING:String = "stateRecording";
 		public static const STATE_RECORDED:String = "stateRecorded";
+		public static const STATE_PLAYING:String = "statePlaying";
 		
 		// list of events this view dispatches (components are not accessed directly by mediator)
 		public static const EVENT_RECORD:String = "eventRecord";
 		public static const EVENT_RECORD_STOP:String = "eventRecordStop";
+		public static const EVENT_PLAY:String = "eventPlay";
+		public static const EVENT_PLAY_STOP:String = "eventPlayStop";
 		
 		// maps states with events for the record button
 		// if a match is not found, no event is dispatched
@@ -29,13 +32,16 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		// as above, but maps states with events for the play button
 		protected static const playButtonEventTypes:Object = {
+			"stateRecorded": "eventPlay",
+			"statePlaying": "eventPlayStop"
 		};
 		
 		// maps states to a desired window title
 		protected static const stateTitles:Object = {
 			"stateInitial": "Record a Sound",
 			"stateRecording": "Recording a Sound...",
-			"stateRecorded": "Recorded a Sound"
+			"stateRecorded": "Recorded a Sound",
+			"statePlaying": "Playing the Sound"
 		};
 		
 		// set the currentState to the initial state
@@ -102,13 +108,13 @@ package com.stuartkeith.soundcloud.recorder.view
 			title = stateTitles[currentState] || "";
 			
 			// set the record button's properties for the current state
-			recordButton.enabled = true;
+			recordButton.enabled = currentState != STATE_PLAYING;
 			recordButton.selected = currentState == STATE_RECORDING;
 			recordButton.label = recordButton.selected ? "Stop" : "Record";
 			
 			// set the play button's properties for the current state
-			playButton.enabled = currentState == STATE_RECORDED;
-			playButton.selected = false;
+			playButton.enabled = currentState == STATE_RECORDED || currentState == STATE_PLAYING;
+			playButton.selected = currentState == STATE_PLAYING;
 			playButton.label = playButton.selected ? "Stop" : "Play";
 			
 			super.draw();
