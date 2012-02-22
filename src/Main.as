@@ -3,6 +3,7 @@ package
 	import com.stuartkeith.soundcloud.recorder.MainContext;
 	import com.stuartkeith.soundcloud.recorder.view.MainView;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
 	import flash.events.Event;
 	
 	public class Main extends Sprite 
@@ -11,6 +12,8 @@ package
 		
 		public function Main():void 
 		{
+			stage.align = StageAlign.TOP_LEFT;
+			
 			mainContext = new MainContext(this);
 			
 			if (stage)
