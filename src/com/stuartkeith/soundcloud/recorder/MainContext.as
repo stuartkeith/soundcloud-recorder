@@ -1,17 +1,11 @@
 package com.stuartkeith.soundcloud.recorder 
 {
-	import com.stuartkeith.soundcloud.recorder.command.BeginRecordingCommand;
-	import com.stuartkeith.soundcloud.recorder.command.NavigateToSoundCloudAuthorisationURLCommand;
-	import com.stuartkeith.soundcloud.recorder.command.ProcessQueryStringCommand;
+	import com.stuartkeith.soundcloud.recorder.command.*;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.MainContext;
-	import com.stuartkeith.soundcloud.recorder.mediator.ConnectButtonMediator;
-	import com.stuartkeith.soundcloud.recorder.mediator.MainMediator;
-	import com.stuartkeith.soundcloud.recorder.mediator.RecordViewMediator;
-	import com.stuartkeith.soundcloud.recorder.view.ConnectButton;
-	import com.stuartkeith.soundcloud.recorder.view.MainView;
-	import com.stuartkeith.soundcloud.recorder.view.RecordView;
-	import com.stuartkeith.soundcloud.recorder.vo.SoundCloudConfigurationVO;
+	import com.stuartkeith.soundcloud.recorder.mediator.*;
+	import com.stuartkeith.soundcloud.recorder.view.*;
+	import com.stuartkeith.soundcloud.recorder.vo.*;
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.mvcs.Context;
 	
