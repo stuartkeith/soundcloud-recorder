@@ -1,5 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.service 
 {
+	import flash.events.Event;
 	import flash.events.SampleDataEvent;
 	import flash.media.Microphone;
 	import flash.utils.ByteArray;
@@ -7,6 +8,13 @@ package com.stuartkeith.soundcloud.recorder.service
 	
 	public class MicrophoneService extends Actor 
 	{
+		public static const EVENT_RECORDING_BEGUN:String = "eventRecordingBegun";
+		public static const EVENT_RECORDING_STOPPED:String = "eventRecordingStopped";
+		
+		// cache the events to avoid continually allocating memory for them.
+		protected static const eventRecordingBegun:Event = new Event(EVENT_RECORDING_BEGUN);
+		protected static const eventRecordingStopped:Event = new Event(EVENT_RECORDING_STOPPED);
+		
 		// the maximum number of seconds the service will record for until it
 		// automatically stops recording.
 		protected static const RECORDING_MAX_SECONDS:int = 10;
@@ -68,6 +76,8 @@ package com.stuartkeith.soundcloud.recorder.service
 			
 			isRecording = true;
 			
+			dispatch(eventRecordingBegun);
+			
 			return true;
 		}
 		
@@ -78,6 +88,8 @@ package com.stuartkeith.soundcloud.recorder.service
 				microphone.removeEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
 				
 				isRecording = false;
+				
+				dispatch(eventRecordingStopped);
 			}
 		}
 		
