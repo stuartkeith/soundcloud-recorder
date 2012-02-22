@@ -4,6 +4,7 @@ package com.stuartkeith.soundcloud.recorder
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.MainContext;
 	import com.stuartkeith.soundcloud.recorder.mediator.*;
+	import com.stuartkeith.soundcloud.recorder.service.*;
 	import com.stuartkeith.soundcloud.recorder.view.*;
 	import com.stuartkeith.soundcloud.recorder.vo.*;
 	import flash.display.DisplayObjectContainer;
@@ -21,6 +22,9 @@ package com.stuartkeith.soundcloud.recorder
 			// create a SoundCloudConfigurationVO and inject it as a singleton for use in commands
 			var soundCloudConfigurationVO:SoundCloudConfigurationVO = new SoundCloudConfigurationVO(contextView.loaderInfo.parameters);
 			injector.mapValue(SoundCloudConfigurationVO, soundCloudConfigurationVO);
+			
+			// inject services
+			injector.mapSingleton(MicrophoneService);
 			
 			// map views to mediators
 			mediatorMap.mapView(MainView, MainMediator);
