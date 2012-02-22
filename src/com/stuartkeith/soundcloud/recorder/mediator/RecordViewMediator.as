@@ -19,9 +19,21 @@ package com.stuartkeith.soundcloud.recorder.mediator
 			// add view listeners.
 			addViewListener(RecordView.EVENT_RECORD, EVENT_RECORD_listener, Event);
 			addViewListener(RecordView.EVENT_RECORD_STOP, EVENT_RECORD_STOP_listener, Event);
+			addViewListener(RecordView.EVENT_PLAY, EVENT_PLAY_listener, Event);
+			addViewListener(RecordView.EVENT_PLAY_STOP, EVENT_PLAY_STOP_listener, Event);
 		}
 		
 		// view listeners:
+		
+		protected function EVENT_PLAY_listener(event:Event):void 
+		{
+			dispatch(new Event(FrameworkEvent.BEGIN_PLAYING));
+		}
+		
+		protected function EVENT_PLAY_STOP_listener(event:Event):void 
+		{
+			dispatch(new Event(FrameworkEvent.STOP_PLAYING));
+		}
 		
 		protected function EVENT_RECORD_listener(event:Event):void 
 		{
