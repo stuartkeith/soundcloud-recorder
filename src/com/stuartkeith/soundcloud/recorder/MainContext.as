@@ -35,6 +35,7 @@ package com.stuartkeith.soundcloud.recorder
 			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);
 			commandMap.mapEvent(FrameworkEvent.BEGIN_RECORDING, BeginRecordingCommand);
 			commandMap.mapEvent(FrameworkEvent.CONNECT_TO_SOUNDCLOUD, NavigateToSoundCloudAuthorisationURLCommand);
+			commandMap.mapEvent(FrameworkEvent.STOP_RECORDING, StopRecordingCommand);
 			
 			// call super (this will dispatch STARTUP_COMPLETE).
 			super.startup();
