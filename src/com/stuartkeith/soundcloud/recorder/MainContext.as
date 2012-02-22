@@ -6,8 +6,10 @@ package com.stuartkeith.soundcloud.recorder
 	import com.stuartkeith.soundcloud.recorder.MainContext;
 	import com.stuartkeith.soundcloud.recorder.mediator.ConnectButtonMediator;
 	import com.stuartkeith.soundcloud.recorder.mediator.MainMediator;
+	import com.stuartkeith.soundcloud.recorder.mediator.RecordViewMediator;
 	import com.stuartkeith.soundcloud.recorder.view.ConnectButton;
 	import com.stuartkeith.soundcloud.recorder.view.MainView;
+	import com.stuartkeith.soundcloud.recorder.view.RecordView;
 	import com.stuartkeith.soundcloud.recorder.vo.SoundCloudConfigurationVO;
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.mvcs.Context;
@@ -28,6 +30,7 @@ package com.stuartkeith.soundcloud.recorder
 			// map views to mediators
 			mediatorMap.mapView(MainView, MainMediator);
 			mediatorMap.mapView(ConnectButton, ConnectButtonMediator);
+			mediatorMap.mapView(RecordView, RecordViewMediator);
 			
 			// map framework events to commands
 			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);

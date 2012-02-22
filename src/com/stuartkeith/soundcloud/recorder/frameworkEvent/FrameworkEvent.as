@@ -11,5 +11,6 @@ package com.stuartkeith.soundcloud.recorder.frameworkEvent
 		public static const AUTHORISATION_REQUIRED:String = "authorisationRequired";
 		public static const AUTHORISATION_SUCCESSFUL:String = "authorisationSuccessful";
 		public static const CONNECT_TO_SOUNDCLOUD:String = "connectToSoundCloud";
+		public static const BEGIN_RECORDING:String = "beginRecording";
 	}
 }
