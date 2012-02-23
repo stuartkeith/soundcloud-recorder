@@ -9,11 +9,6 @@ package com.stuartkeith.soundcloud.recorder.service
 	public class MicrophoneService extends Actor 
 	{
 		public static const EVENT_RECORDING_BEGUN:String = "eventRecordingBegun";
-		public static const EVENT_RECORDING_STOPPED:String = "eventRecordingStopped";
-		
-		// cache the events to avoid continually allocating memory for them.
-		protected static const eventRecordingBegun:Event = new Event(EVENT_RECORDING_BEGUN);
-		protected static const eventRecordingStopped:Event = new Event(EVENT_RECORDING_STOPPED);
 		
 		// the maximum number of seconds the service will record for until it
 		// automatically stops recording.
@@ -26,22 +21,13 @@ package com.stuartkeith.soundcloud.recorder.service
 		protected static const RECORDING_BUFFER_MAX:int = RECORDING_MAX_SECONDS * 44100 * 4;
 		
 		protected var microphone:Microphone;
-		protected var isRecording:Boolean;
 		
-		// the recorded audio is stored in this byteArray.
+		// the recorded data is stored in this byteArray.
+		// set to null if not currently recording.
 		protected var recordingBuffer:ByteArray;
-		
-		// the number of bytes recorded. use this instead of
-		// recordingBuffer.length: the recordingBuffer is not reset in between
-		// recordings in order to prevent deallocation of memory, so
-		// recordingBuffer.length does not necessarily return the current
-		// recording's length.
-		protected var recordingBufferLength:int;
 		
 		public function MicrophoneService() 
 		{
-			recordingBuffer = new ByteArray();
-			
 			// get the default microphone.
 			microphone = Microphone.getMicrophone();
 			
@@ -61,56 +47,50 @@ package com.stuartkeith.soundcloud.recorder.service
 				return false;
 			
 			// if we're already recording, stop first.
-			if (isRecording)
+			if (recordingBuffer)
 				stopRecording();
 			
 			// add the event listener for the incoming sound data.
 			microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
 			
-			// reset the recordingBuffer.position and recordingBufferLength.
-			// note the recordingBuffer is not cleared, so
-			// recordingBuffer.length will not be accurate, use
-			// recordingBufferLength instead.
-			recordingBuffer.position = 0;
-			recordingBufferLength = 0;
+			// create a new buffer.
+			recordingBuffer = new ByteArray();
 			
-			isRecording = true;
-			
-			dispatch(eventRecordingBegun);
+			dispatch(new Event(EVENT_RECORDING_BEGUN));
 			
 			return true;
 		}
 		
 		public function stopRecording():void
 		{
-			if (isRecording)
+			if (recordingBuffer)
 			{
 				microphone.removeEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
 				
-				isRecording = false;
+				// rewind the buffer so any listeners don't have to do it.
+				recordingBuffer.position = 0;
 				
-				dispatch(eventRecordingStopped);
+				dispatch(new MicrophoneServiceEvent(MicrophoneServiceEvent.RECORDING_COMPLETE, recordingBuffer));
+				
+				recordingBuffer = null;
 			}
 		}
 		
 		protected function SAMPLE_DATA_listener(event:SampleDataEvent):void 
 		{
-			if (isRecording)
+			if (recordingBuffer)
 			{
 				// scale the activityLevel down, from 0-100 to 0-1.
 				var activityLevel:Number = microphone.activityLevel / 100;
-				
-				// add the length of the incoming data
-				recordingBufferLength += event.data.length;
 				
 				// copy the incoming data into the recordingBuffer
 				recordingBuffer.writeBytes(event.data);
 				
 				// is it time to automatically stop the recording?
-				if (recordingBufferLength >= RECORDING_BUFFER_MAX)
+				if (recordingBuffer.length >= RECORDING_BUFFER_MAX)
 				{
 					// clamp the length of the recording to the maximum.
-					recordingBufferLength = RECORDING_BUFFER_MAX;
+					recordingBuffer.length = RECORDING_BUFFER_MAX;
 					
 					// and stop the recording.
 					stopRecording();

@@ -2,6 +2,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 {
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.service.MicrophoneService;
+	import com.stuartkeith.soundcloud.recorder.service.MicrophoneServiceEvent;
 	import com.stuartkeith.soundcloud.recorder.view.RecordView;
 	import flash.events.Event;
 	import org.robotlegs.mvcs.Mediator;
@@ -14,7 +15,8 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		{
 			// add context listeners.
 			addContextListener(MicrophoneService.EVENT_RECORDING_BEGUN, EVENT_RECORDING_BEGUN_listener, Event);
-			addContextListener(MicrophoneService.EVENT_RECORDING_STOPPED, EVENT_RECORDING_STOPPED_listener, Event);
+			addContextListener(MicrophoneServiceEvent.RECORDING_COMPLETE, EVENT_RECORDING_STOPPED_listener,
+					MicrophoneServiceEvent);
 			
 			// add view listeners.
 			addViewListener(RecordView.EVENT_RECORD, EVENT_RECORD_listener, Event);
