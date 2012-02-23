@@ -18,6 +18,11 @@ package com.stuartkeith.soundcloud.recorder.frameworkEvent
 			_errorDescription = $errorDescription;
 		}
 		
+		override public function clone():Event 
+		{
+			return new AuthorisationError(type, _error, _errorDescription, bubbles, cancelable);
+		}
+		
 		public function get error():String 
 		{
 			return _error;

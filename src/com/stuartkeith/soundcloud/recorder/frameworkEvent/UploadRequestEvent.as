@@ -18,7 +18,11 @@ package com.stuartkeith.soundcloud.recorder.frameworkEvent
 			_soundTitle = $soundTitle;
 			_soundIsPublic = $soundIsPublic;
 			_soundTags = $soundTags;
-			
+		}
+		
+		override public function clone():Event 
+		{
+			return new UploadRequestEvent(type, _soundTitle, _soundIsPublic, _soundTags, bubbles, cancelable);
 		}
 		
 		public function get soundTitle():String 
