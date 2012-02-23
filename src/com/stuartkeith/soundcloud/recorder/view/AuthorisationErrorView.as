@@ -6,11 +6,11 @@ package com.stuartkeith.soundcloud.recorder.view
 	{
 		protected var errorDescription:String;
 		
-		public function AuthorisationErrorView(parent:DisplayObjectContainer, $errorDescription:String) 
+		public function AuthorisationErrorView($errorDescription:String) 
 		{
 			errorDescription = $errorDescription;
 			
-			super(parent);
+			super();
 		}
 		
 		override protected function getTitleString():String 

@@ -54,9 +54,9 @@ package com.stuartkeith.soundcloud.recorder.view
 		protected var playButton:PushButton;
 		protected var uploadButton:PushButton;
 		
-		public function RecordView(parent:DisplayObjectContainer) 
+		public function RecordView() 
 		{
-			super(parent, 0, 0, "");
+			super(null, 0, 0, "");
 			
 			// set up the window
 			

@@ -10,9 +10,9 @@ package com.stuartkeith.soundcloud.recorder.view
 		protected var text:Text;
 		protected var connectButton:ConnectButton;
 		
-		public function AuthorisationView(parent:DisplayObjectContainer)
+		public function AuthorisationView()
 		{
-			super(parent, 0, 0, getTitleString());
+			super(null, 0, 0, getTitleString());
 			
 			width = 320;
 			height = 240;

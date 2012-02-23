@@ -29,17 +29,17 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		public function showAuthorisationError(error:String, errorDescription:String):void
 		{
-			changeChildView(new AuthorisationErrorView(this, errorDescription));
+			changeChildView(new AuthorisationErrorView(errorDescription));
 		}
 		
 		public function showAuthorisationView():void
 		{
-			changeChildView(new AuthorisationView(this));
+			changeChildView(new AuthorisationView());
 		}
 		
 		public function showRecordingView():void
 		{
-			changeChildView(new RecordView(this));
+			changeChildView(new RecordView());
 		}
 		
 		public function showUploadSoundView():void
