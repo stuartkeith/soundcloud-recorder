@@ -4,7 +4,9 @@ package com.stuartkeith.soundcloud.recorder
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.MainContext;
 	import com.stuartkeith.soundcloud.recorder.mediator.*;
+	import com.stuartkeith.soundcloud.recorder.model.*;
 	import com.stuartkeith.soundcloud.recorder.service.*;
+	import com.stuartkeith.soundcloud.recorder.service.MicrophoneServiceEvent;
 	import com.stuartkeith.soundcloud.recorder.view.*;
 	import com.stuartkeith.soundcloud.recorder.vo.*;
 	import flash.display.DisplayObjectContainer;
@@ -23,6 +25,9 @@ package com.stuartkeith.soundcloud.recorder
 			var soundCloudConfigurationVO:SoundCloudConfigurationVO = new SoundCloudConfigurationVO(contextView.loaderInfo.parameters);
 			injector.mapValue(SoundCloudConfigurationVO, soundCloudConfigurationVO);
 			
+			// inject models
+			injector.mapSingleton(RecordingModel);
+			
 			// inject services
 			injector.mapSingleton(MicrophoneService);
 			
@@ -36,6 +41,7 @@ package com.stuartkeith.soundcloud.recorder
 			commandMap.mapEvent(FrameworkEvent.BEGIN_RECORDING, BeginRecordingCommand);
 			commandMap.mapEvent(FrameworkEvent.CONNECT_TO_SOUNDCLOUD, NavigateToSoundCloudAuthorisationURLCommand);
 			commandMap.mapEvent(FrameworkEvent.STOP_RECORDING, StopRecordingCommand);
+			commandMap.mapEvent(MicrophoneServiceEvent.RECORDING_COMPLETE, StoreRecordingCommand);
 			
 			// call super (this will dispatch STARTUP_COMPLETE).
 			super.startup();
