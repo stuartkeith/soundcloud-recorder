@@ -6,7 +6,6 @@ package com.stuartkeith.soundcloud.recorder
 	import com.stuartkeith.soundcloud.recorder.mediator.*;
 	import com.stuartkeith.soundcloud.recorder.model.*;
 	import com.stuartkeith.soundcloud.recorder.service.*;
-	import com.stuartkeith.soundcloud.recorder.service.MicrophoneServiceEvent;
 	import com.stuartkeith.soundcloud.recorder.view.*;
 	import com.stuartkeith.soundcloud.recorder.vo.*;
 	import flash.display.DisplayObjectContainer;
