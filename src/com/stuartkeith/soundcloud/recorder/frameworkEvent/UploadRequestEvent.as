@@ -1,8 +1,8 @@
-package com.stuartkeith.soundcloud.recorder.view 
+package com.stuartkeith.soundcloud.recorder.frameworkEvent 
 {
 	import flash.events.Event;
 	
-	public class UploadSoundViewEvent extends Event 
+	public class UploadRequestEvent extends Event 
 	{
 		public static const UPLOAD_REQUEST:String = "uploadRequest";
 		
@@ -10,7 +10,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		protected var _soundIsPublic:Boolean;
 		protected var _soundTags:String;
 		
-		public function UploadSoundViewEvent(type:String, $soundTitle:String, $soundIsPublic:Boolean,
+		public function UploadRequestEvent(type:String, $soundTitle:String, $soundIsPublic:Boolean,
 				$soundTags:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{
 			super(type, bubbles, cancelable);
