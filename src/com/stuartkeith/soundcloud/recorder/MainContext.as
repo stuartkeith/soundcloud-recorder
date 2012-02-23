@@ -45,6 +45,7 @@ package com.stuartkeith.soundcloud.recorder
 			commandMap.mapEvent(FrameworkEvent.STOP_PLAYING, StopPlayingCommand);
 			commandMap.mapEvent(FrameworkEvent.STOP_RECORDING, StopRecordingCommand);
 			commandMap.mapEvent(MicrophoneServiceEvent.RECORDING_COMPLETE, StoreRecordingCommand);
+			commandMap.mapEvent(UploadRequestEvent.UPLOAD_REQUEST, UploadSoundCommand);
 			
 			// call super (this will dispatch STARTUP_COMPLETE).
 			super.startup();
