@@ -1,7 +1,7 @@
 package com.stuartkeith.soundcloud.recorder 
 {
 	import com.stuartkeith.soundcloud.recorder.command.*;
-	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.*;
 	import com.stuartkeith.soundcloud.recorder.MainContext;
 	import com.stuartkeith.soundcloud.recorder.mediator.*;
 	import com.stuartkeith.soundcloud.recorder.model.*;
