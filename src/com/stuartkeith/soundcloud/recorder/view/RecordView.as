@@ -2,6 +2,7 @@ package com.stuartkeith.soundcloud.recorder.view
 {
 	import com.bit101.components.HBox;
 	import com.bit101.components.PushButton;
+	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
@@ -21,6 +22,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		public static const EVENT_RECORD_STOP:String = "eventRecordStop";
 		public static const EVENT_PLAY:String = "eventPlay";
 		public static const EVENT_PLAY_STOP:String = "eventPlayStop";
+		public static const EVENT_UPLOAD:String = "eventUpload";
 		
 		// maps states with events for the record button
 		// if a match is not found, no event is dispatched
@@ -50,6 +52,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		// components used by this view
 		protected var recordButton:PushButton;
 		protected var playButton:PushButton;
+		protected var uploadButton:PushButton;
 		
 		public function RecordView(parent:DisplayObjectContainer) 
 		{
@@ -68,8 +71,12 @@ package com.stuartkeith.soundcloud.recorder.view
 			var hBox:HBox = new HBox();
 			hBox.alignment = HBox.MIDDLE;
 			hBox.spacing = spacing;
-			hBox.x = spacing;
-			hBox.y = spacing;
+			
+			var vBox:VBox = new VBox();
+			vBox.alignment = VBox.CENTER;
+			vBox.spacing = spacing;
+			vBox.x = spacing;
+			vBox.y = spacing;
 			
 			// create components and add listeners
 			
@@ -81,12 +88,20 @@ package com.stuartkeith.soundcloud.recorder.view
 			playButton.toggle = true;
 			playButton.addEventListener(MouseEvent.CLICK, onPlayButtonClicked);
 			
+			uploadButton = new PushButton();
+			uploadButton.label = "Upload to SoundCloud";
+			uploadButton.width += spacing * 4;
+			uploadButton.addEventListener(MouseEvent.CLICK, onUploadButtonClicked);
+			
 			// add components to containers
 			
-			addChild(hBox);
+			addChild(vBox);
+			vBox.addChild(hBox);
 			
 			hBox.addChild(recordButton);
 			hBox.addChild(playButton);
+			
+			vBox.addChild(uploadButton);
 		}
 		
 		public function changeState(state:String):void
@@ -117,6 +132,8 @@ package com.stuartkeith.soundcloud.recorder.view
 			playButton.selected = currentState == STATE_PLAYING;
 			playButton.label = playButton.selected ? "Stop" : "Play";
 			
+			uploadButton.enabled = currentState == STATE_RECORDED;
+			
 			super.draw();
 		}
 		
@@ -134,6 +151,11 @@ package com.stuartkeith.soundcloud.recorder.view
 		protected function onPlayButtonClicked(event:MouseEvent):void 
 		{
 			dispatchEventType(playButtonEventTypes[currentState]);
+		}
+		
+		protected function onUploadButtonClicked(event:MouseEvent):void 
+		{
+			dispatchEvent(new Event(EVENT_UPLOAD));
 		}
 	}
 }
