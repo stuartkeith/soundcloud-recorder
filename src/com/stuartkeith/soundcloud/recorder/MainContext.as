@@ -30,6 +30,7 @@ package com.stuartkeith.soundcloud.recorder
 			
 			// inject services
 			injector.mapSingleton(MicrophoneService);
+			injector.mapSingleton(SoundOutputService);
 			
 			// map views to mediators
 			mediatorMap.mapView(MainView, MainMediator);
@@ -38,6 +39,7 @@ package com.stuartkeith.soundcloud.recorder
 			
 			// map framework events to commands
 			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);
+			commandMap.mapEvent(FrameworkEvent.BEGIN_PLAYING, BeginPlayingCommand);
 			commandMap.mapEvent(FrameworkEvent.BEGIN_RECORDING, BeginRecordingCommand);
 			commandMap.mapEvent(FrameworkEvent.CONNECT_TO_SOUNDCLOUD, NavigateToSoundCloudAuthorisationURLCommand);
 			commandMap.mapEvent(FrameworkEvent.STOP_RECORDING, StopRecordingCommand);
