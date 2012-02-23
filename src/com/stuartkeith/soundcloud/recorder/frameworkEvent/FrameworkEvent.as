@@ -15,5 +15,6 @@ package com.stuartkeith.soundcloud.recorder.frameworkEvent
 		public static const STOP_PLAYING:String = "stopPlaying";
 		public static const BEGIN_RECORDING:String = "beginRecording";
 		public static const STOP_RECORDING:String = "stopRecording";
+		public static const BEGIN_UPLOAD:String = "beginUpload";
 	}
 }
