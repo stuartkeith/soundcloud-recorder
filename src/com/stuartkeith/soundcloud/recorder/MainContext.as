@@ -36,6 +36,7 @@ package com.stuartkeith.soundcloud.recorder
 			mediatorMap.mapView(MainView, MainMediator);
 			mediatorMap.mapView(ConnectButton, ConnectButtonMediator);
 			mediatorMap.mapView(RecordView, RecordViewMediator);
+			mediatorMap.mapView(UploadSoundView, UploadSoundViewMediator);
 			
 			// map framework events to commands
 			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);
