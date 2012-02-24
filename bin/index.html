@@ -4,16 +4,42 @@
 	<meta charset="utf-8"/>
 	<title>SoundCloud Recorder</title>
 	<script src="js/swfobject.js"></script>
+	<script id="iDeviceContent" type="text/html">
+		<h1>SoundCloud Recorder</h1>
+		<p>Unfortunately, SoundCloud Recorder requires Flash, which is not available on your device.</p>
+		<p>To record sounds and upload them to your SoundCloud account using your iPhone or iPad,
+		<a href="http://itunes.apple.com/us/app/soundcloud/id336353151">get the iPad + iPhone app on iTunes</a>.</p>
+	</script>
+	<script id="androidContent" type="text/html">
+		<h1>SoundCloud Recorder</h1>
+		<p>Unfortunately, SoundCloud Recorder requires Flash.</p>
+		<p>To record sounds and upload them to your SoundCloud account using your Android phone,
+		<a href="https://market.android.com/details?id=com.soundcloud.android">get the Android app on the Android Market</a>.</p>
+	</script>
+	<script id="mobileContent" type="text/html">
+		<h1>SoundCloud Recorder</h1>
+		<p>Unfortunately, SoundCloud Recorder requires Flash.</p>
+		<p>To record sounds and upload them to your SoundCloud account, take a look at SoundCloud's
+		<a href="http://soundcloud.com/mobile/">mobile apps</a>.</p>
+	</script>
 	<script>
-		// check if the browser is an iDevice, Android, or other mobile device, and redirect
-		// to the relevant SoundCloud page.
-		if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
-			window.location.replace("http://soundcloud.com/apps/iphone");
-		} else if (navigator.userAgent.match(/Android/)) {
-			window.location.replace("http://soundcloud.com/apps/android");
-		} else if (navigator.userAgent.match(/mobile/i)) {
-			window.location.replace("http://soundcloud.com/mobile");
-		}
+		swfobject.addDomLoadEvent(function () {
+			var altContent = document.getElementById("altContent");
+			
+			if (!altContent)
+				return;
+			
+			// check if the browser is an iDevice, Android, or other mobile device, and change the
+			// alternative content to show relevant information to the user.
+			
+			if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+				altContent.innerHTML = document.getElementById("iDeviceContent").innerHTML;
+			} else if (navigator.userAgent.match(/Android/)) {
+				altContent.innerHTML = document.getElementById("androidContent").innerHTML;
+			} else if (navigator.userAgent.match(/mobile/i)) {
+				altContent.innerHTML = document.getElementById("mobileContent").innerHTML;
+			}
+		});
 		
 		var getQueryString = function () {
 			if (window.location.search) {
@@ -64,7 +90,6 @@
 		<h1>SoundCloud Recorder</h1>
 		<p>It appears that you do not have the Adobe Flash played installed.</p>
 		<p><a href="http://www.adobe.com/go/getflashplayer">Please install the Adobe Flash player</a>.</p>
-		<p>Alternatively, take a look at <a href="http://soundcloud.com/mobile">SoundCloud's native apps</a>.</p>
 	</div>
 </body>
 </html>
