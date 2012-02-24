@@ -7,7 +7,7 @@ package com.stuartkeith.soundcloud.recorder.frameworkEvent
 		// uploading has begun.
 		public static const UPLOADING:String = "uploading";
 		// upload was successful. carries response XML.
-		public static const UPLOADED:String = "uploading";
+		public static const UPLOADED:String = "uploaded";
 		// there was an error during uploading.
 		public static const UPLOAD_ERROR:String = "uploadError";
 		
