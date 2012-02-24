@@ -37,6 +37,7 @@ package com.stuartkeith.soundcloud.recorder
 			mediatorMap.mapView(ConnectButton, ConnectButtonMediator);
 			mediatorMap.mapView(RecordView, RecordViewMediator);
 			mediatorMap.mapView(UploadSoundView, UploadSoundViewMediator);
+			mediatorMap.mapView(UploadedSoundView, UploadedSoundViewMediator);
 			
 			// map framework events to commands
 			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);
@@ -46,6 +47,7 @@ package com.stuartkeith.soundcloud.recorder
 			commandMap.mapEvent(FrameworkEvent.STOP_PLAYING, StopPlayingCommand);
 			commandMap.mapEvent(FrameworkEvent.STOP_RECORDING, StopRecordingCommand);
 			commandMap.mapEvent(MicrophoneServiceEvent.RECORDING_COMPLETE, StoreRecordingCommand);
+			commandMap.mapEvent(NavigateToURLEvent.NAVIGATE_TO_URL, NavigateToURLCommand);
 			commandMap.mapEvent(UploadRequestEvent.UPLOAD_REQUEST, UploadSoundCommand);
 			
 			// call super (this will dispatch STARTUP_COMPLETE).
