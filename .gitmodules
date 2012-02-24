@@ -1,3 +1,6 @@
 [submodule "lib/minimalcomps"]
 	path = lib/minimalcomps
 	url = git://github.com/minimalcomps/minimalcomps.git
+[submodule "lib/MultipartURLLoader"]
+	path = lib/MultipartURLLoader
+	url = git://github.com/markpasc/MultipartURLLoader.git

@@ -29,6 +29,7 @@ package com.stuartkeith.soundcloud.recorder
 			
 			// inject services
 			injector.mapSingleton(MicrophoneService);
+			injector.mapSingleton(SoundCloudService);
 			injector.mapSingleton(SoundOutputService);
 			
 			// map views to mediators
