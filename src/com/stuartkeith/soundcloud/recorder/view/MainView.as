@@ -46,5 +46,10 @@ package com.stuartkeith.soundcloud.recorder.view
 		{
 			changeChildView(new UploadSoundView());
 		}
+		
+		public function showUploadingSoundView():void
+		{
+			
+		}
 	}
 }
