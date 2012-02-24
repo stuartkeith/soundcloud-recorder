@@ -1,8 +1,7 @@
 package com.stuartkeith.soundcloud.recorder.command 
 {
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.NavigateToURLEvent;
 	import com.stuartkeith.soundcloud.recorder.vo.SoundCloudConfigurationVO;
-	import flash.net.navigateToURL;
-	import flash.net.URLRequest;
 	import org.robotlegs.mvcs.Command;
 	
 	public class NavigateToSoundCloudAuthorisationURLCommand extends Command 
@@ -16,7 +15,8 @@ package com.stuartkeith.soundcloud.recorder.command
 		
 		override public function execute():void 
 		{
-			navigateToURL(new URLRequest(soundCloudConfigurationVO.authorisationURL), "_top");
+			dispatch(new NavigateToURLEvent(NavigateToURLEvent.NAVIGATE_TO_URL,
+					soundCloudConfigurationVO.authorisationURL, "_top"));
 		}
 	}
 }
