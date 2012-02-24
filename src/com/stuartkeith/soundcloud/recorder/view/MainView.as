@@ -49,7 +49,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		public function showUploadingSoundView():void
 		{
-			
+			changeChildView(new UploadingSoundView());
 		}
 	}
 }

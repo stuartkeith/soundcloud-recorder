@@ -1,6 +1,9 @@
 SoundCloud Recorder
 ===================
 
+Loading spinner animation from:
+http://labs.wondergroup.com/programs/flash/loading-spinner-animations-for-flash/
+
 TODO
 ----
 
