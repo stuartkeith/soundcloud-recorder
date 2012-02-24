@@ -5,6 +5,16 @@
 	<title>SoundCloud Recorder</title>
 	<script src="js/swfobject.js"></script>
 	<script>
+		// check if the browser is an iDevice, Android, or other mobile device, and redirect
+		// to the relevant SoundCloud page.
+		if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+			window.location.replace("http://soundcloud.com/apps/iphone");
+		} else if (navigator.userAgent.match(/Android/)) {
+			window.location.replace("http://soundcloud.com/apps/android");
+		} else if (navigator.userAgent.match(/mobile/i)) {
+			window.location.replace("http://soundcloud.com/mobile");
+		}
+		
 		var getQueryString = function () {
 			if (window.location.search) {
 				// we don't need the "?" character
