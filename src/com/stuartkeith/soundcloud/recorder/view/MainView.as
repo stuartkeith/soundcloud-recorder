@@ -52,9 +52,9 @@ package com.stuartkeith.soundcloud.recorder.view
 			changeChildView(new UploadingSoundView());
 		}
 		
-		public function showUploadedSoundView(response:XML):void
+		public function showUploadedSoundView(title:String, permalinkURL:String):void
 		{
-			
+			changeChildView(new UploadedSoundView(title, permalinkURL));
 		}
 	}
 }

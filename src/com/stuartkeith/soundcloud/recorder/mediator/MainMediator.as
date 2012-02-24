@@ -50,7 +50,10 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		
 		protected function UPLOADED_listener(event:UploadEvent):void 
 		{
-			mainView.showUploadedSoundView(event.response);
+			var title:String = event.response["title"];
+			var permalinkURL:String = event.response["permalink-url"];
+			
+			mainView.showUploadedSoundView(title, permalinkURL);
 		}
 	}
 }
