@@ -3,12 +3,14 @@ package com.stuartkeith.soundcloud.recorder.mediator
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.AuthorisationError;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.UploadEvent;
+	import com.stuartkeith.soundcloud.recorder.service.MicrophoneService;
 	import com.stuartkeith.soundcloud.recorder.view.MainView;
 	import flash.events.Event;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class MainMediator extends Mediator 
 	{
+		[Inject] public var microphoneService:MicrophoneService;
 		[Inject] public var mainView:MainView;
 		
 		override public function onRegister():void 
@@ -35,6 +37,10 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		
 		protected function AUTHORISATION_SUCCESSFUL_listener(event:Event):void 
 		{
+			// this ensures the microphone access prompt will pop up now, rather than
+			// when the record button is pressed.
+			microphoneService;
+			
 			mainView.showRecordingView();
 		}
 		

@@ -37,6 +37,11 @@ package com.stuartkeith.soundcloud.recorder.service
 				microphone.rate = 44;
 				// prevent the microphone from becoming inactive.
 				microphone.setSilenceLevel(0);
+				
+				// this ensures the microphone access prompt will pop up now, rather than
+				// when the record button is pressed.
+				microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
+				microphone.removeEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
 			}
 		}
 		
