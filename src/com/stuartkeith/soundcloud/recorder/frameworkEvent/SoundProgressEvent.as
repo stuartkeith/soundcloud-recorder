@@ -38,8 +38,8 @@ package com.stuartkeith.soundcloud.recorder.frameworkEvent
 			
 			// there are 44100 samples per second, so divide
 			// by 44100.
-			_secondsWritten = Math.ceil(_samplesWritten / 44100);
-			_secondsTotal = Math.ceil(_samplesTotal / 44100);
+			_secondsWritten = Math.floor(_samplesWritten / 44100);
+			_secondsTotal = Math.floor(_samplesTotal / 44100);
 		}
 		
 		override public function clone():Event 
