@@ -73,7 +73,8 @@ package com.stuartkeith.soundcloud.recorder.service
 				// rewind the buffer so any listeners don't have to do it.
 				recordingBuffer.position = 0;
 				
-				dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_COMPLETE, recordingBuffer, RECORDING_BUFFER_MAX));
+				// do not specify bytesTotal when recording is complete, as the buffer is now fixed.
+				dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_COMPLETE, recordingBuffer));
 				
 				recordingBuffer = null;
 			}
