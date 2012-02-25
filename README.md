@@ -8,11 +8,10 @@ TODO
 ----
 
 - Audio visualisation.
-- Larger lay and record buttons.
+- Larger play and record buttons.
 - Check source comments.
 - Expand this README.
 - Neaten up component dimensions.
-- Rename AuthorisationError to AuthorisationErrorEvent.
 - Check model/VO names.
 - WAVE file should not be built every time, only when recording changes.
 - Merge UploadEvent and UploadRequestEvent.

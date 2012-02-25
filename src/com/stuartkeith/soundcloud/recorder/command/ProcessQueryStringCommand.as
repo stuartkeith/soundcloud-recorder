@@ -1,6 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.command 
 {
-	import com.stuartkeith.soundcloud.recorder.frameworkEvent.AuthorisationError;
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.AuthorisationErrorEvent;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.vo.SoundCloudConfigurationVO;
 	import flash.events.Event;
@@ -41,7 +41,7 @@ package com.stuartkeith.soundcloud.recorder.command
 				// if there's been an error, dispatch an event
 				else if (urlVariables.error)
 				{
-					dispatch(new AuthorisationError(AuthorisationError.AUTHORISATION_ERROR,
+					dispatch(new AuthorisationErrorEvent(AuthorisationErrorEvent.AUTHORISATION_ERROR,
 							urlVariables.error, urlVariables.error_description));
 					
 					return;
