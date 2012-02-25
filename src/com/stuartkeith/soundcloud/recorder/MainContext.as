@@ -36,6 +36,7 @@ package com.stuartkeith.soundcloud.recorder
 			mediatorMap.mapView(MainView, MainMediator);
 			mediatorMap.mapView(ConnectButton, ConnectButtonMediator);
 			mediatorMap.mapView(RecordView, RecordViewMediator);
+			mediatorMap.mapView(TimeView, TimeViewMediator);
 			mediatorMap.mapView(UploadSoundView, UploadSoundViewMediator);
 			mediatorMap.mapView(UploadedSoundView, UploadedSoundViewMediator);
 			

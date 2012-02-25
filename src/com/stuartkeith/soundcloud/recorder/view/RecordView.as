@@ -4,7 +4,6 @@ package com.stuartkeith.soundcloud.recorder.view
 	import com.bit101.components.PushButton;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
-	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
@@ -50,6 +49,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		protected var currentState:String = STATE_INITIAL;
 		
 		// components used by this view
+		protected var timeView:TimeView;
 		protected var recordButton:PushButton;
 		protected var playButton:PushButton;
 		protected var uploadButton:PushButton;
@@ -80,6 +80,10 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			// create components and add listeners
 			
+			timeView = new TimeView();
+			timeView.width = width - (spacing * 2);
+			timeView.height = 32;
+			
 			recordButton = new PushButton();
 			recordButton.toggle = true;
 			recordButton.addEventListener(MouseEvent.CLICK, onRecordButtonClicked);
@@ -96,6 +100,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			// add components to containers
 			
 			addChild(vBox);
+			vBox.addChild(timeView);
 			vBox.addChild(hBox);
 			
 			hBox.addChild(recordButton);
