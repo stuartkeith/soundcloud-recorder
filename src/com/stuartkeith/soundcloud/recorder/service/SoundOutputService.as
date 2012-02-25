@@ -46,6 +46,8 @@ package com.stuartkeith.soundcloud.recorder.service
 		
 		public function stopPlaying():void
 		{
+			currentRecordingBuffer.position = 0;
+			
 			dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_COMPLETE, currentRecordingBuffer));
 			
 			currentRecordingBuffer = null;
