@@ -1,6 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.service 
 {
-	import flash.events.Event;
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.SoundProgressEvent;
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
 	import flash.utils.ByteArray;
@@ -8,9 +8,6 @@ package com.stuartkeith.soundcloud.recorder.service
 	
 	public class SoundOutputService extends Actor 
 	{
-		public static const EVENT_PLAYING:String = "eventPlaying";
-		public static const EVENT_STOPPED:String = "eventStopped";
-		
 		// the maximum number of bytes to output each update.
 		// bytes = number of samples * 4 bytes per sample.
 		protected static const MAX_OUTPUT_BYTES:uint = 2048 * 4;
@@ -41,17 +38,17 @@ package com.stuartkeith.soundcloud.recorder.service
 				
 				recordingBuffer.position = 0;
 				
-				outputSound.play();
+				dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_START, currentRecordingBuffer));
 				
-				dispatch(new Event(EVENT_PLAYING));
+				outputSound.play();
 			}
 		}
 		
 		public function stopPlaying():void
 		{
-			currentRecordingBuffer = null;
+			dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_COMPLETE, currentRecordingBuffer));
 			
-			dispatch(new Event(EVENT_STOPPED));
+			currentRecordingBuffer = null;
 		}
 		
 		protected function SAMPLE_DATA_listener(event:SampleDataEvent):void 
@@ -62,7 +59,7 @@ package com.stuartkeith.soundcloud.recorder.service
 				var outputBuffer:ByteArray = event.data;
 				// store currentBuffer.bytesAvailable in a local variable for faster access.
 				var bytesAvailable:uint = currentRecordingBuffer.bytesAvailable;
-				// process as many bytes as possible from the recording - capped at MAX_OUTPUT_BYTES.
+				// process as many bytes as possible from the recording: capped at MAX_OUTPUT_BYTES.
 				var bytesToProcess:uint = bytesAvailable < MAX_OUTPUT_BYTES ? bytesAvailable : MAX_OUTPUT_BYTES;
 				// each float/Number is four bytes in size.
 				var floatsToProcess:uint = bytesToProcess / 4;
@@ -84,6 +81,8 @@ package com.stuartkeith.soundcloud.recorder.service
 				// we've run out of bytes. stop the playback.
 				if (bytesToProcess != MAX_OUTPUT_BYTES)
 					stopPlaying();
+				else
+					dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_PROGRESS, currentRecordingBuffer));
 			}
 		}
 	}

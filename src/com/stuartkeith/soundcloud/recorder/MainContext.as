@@ -46,7 +46,7 @@ package com.stuartkeith.soundcloud.recorder
 			commandMap.mapEvent(FrameworkEvent.CONNECT_TO_SOUNDCLOUD, NavigateToSoundCloudAuthorisationURLCommand);
 			commandMap.mapEvent(FrameworkEvent.STOP_PLAYING, StopPlayingCommand);
 			commandMap.mapEvent(FrameworkEvent.STOP_RECORDING, StopRecordingCommand);
-			commandMap.mapEvent(MicrophoneServiceEvent.RECORDING_COMPLETE, StoreRecordingCommand);
+			commandMap.mapEvent(SoundProgressEvent.RECORD_COMPLETE, StoreRecordingCommand);
 			commandMap.mapEvent(NavigateToURLEvent.NAVIGATE_TO_URL, NavigateToURLCommand);
 			commandMap.mapEvent(UploadRequestEvent.UPLOAD_REQUEST, UploadSoundCommand);
 			

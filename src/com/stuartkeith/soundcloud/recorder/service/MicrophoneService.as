@@ -1,6 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.service 
 {
-	import flash.events.Event;
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.SoundProgressEvent;
 	import flash.events.SampleDataEvent;
 	import flash.media.Microphone;
 	import flash.utils.ByteArray;
@@ -8,8 +8,6 @@ package com.stuartkeith.soundcloud.recorder.service
 	
 	public class MicrophoneService extends Actor 
 	{
-		public static const EVENT_RECORDING_BEGUN:String = "eventRecordingBegun";
-		
 		// the maximum number of seconds the service will record for until it
 		// automatically stops recording.
 		protected static const RECORDING_MAX_SECONDS:int = 10;
@@ -61,7 +59,7 @@ package com.stuartkeith.soundcloud.recorder.service
 			// create a new buffer.
 			recordingBuffer = new ByteArray();
 			
-			dispatch(new Event(EVENT_RECORDING_BEGUN));
+			dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_START, recordingBuffer, RECORDING_BUFFER_MAX));
 			
 			return true;
 		}
@@ -75,7 +73,7 @@ package com.stuartkeith.soundcloud.recorder.service
 				// rewind the buffer so any listeners don't have to do it.
 				recordingBuffer.position = 0;
 				
-				dispatch(new MicrophoneServiceEvent(MicrophoneServiceEvent.RECORDING_COMPLETE, recordingBuffer));
+				dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_COMPLETE, recordingBuffer, RECORDING_BUFFER_MAX));
 				
 				recordingBuffer = null;
 			}
@@ -85,20 +83,28 @@ package com.stuartkeith.soundcloud.recorder.service
 		{
 			if (recordingBuffer)
 			{
-				// scale the activityLevel down, from 0-100 to 0-1.
-				var activityLevel:Number = microphone.activityLevel / 100;
-				
-				// copy the incoming data into the recordingBuffer
+				// copy the incoming data into the recordingBuffer.
 				recordingBuffer.writeBytes(event.data);
 				
+				// clamp the length of the recording to the maximum.
+				// need to do this before the event is dispatched, or
+				// the reported samplesTotal might be incorrect.
+				if (recordingBuffer.length > RECORDING_BUFFER_MAX)
+					recordingBuffer.length = RECORDING_BUFFER_MAX;
+				
 				// is it time to automatically stop the recording?
-				if (recordingBuffer.length >= RECORDING_BUFFER_MAX)
+				if (recordingBuffer.length == RECORDING_BUFFER_MAX)
 				{
 					// clamp the length of the recording to the maximum.
 					recordingBuffer.length = RECORDING_BUFFER_MAX;
 					
 					// and stop the recording.
 					stopRecording();
+				}
+				else
+				{
+					dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_PROGRESS, recordingBuffer,
+							RECORDING_BUFFER_MAX));
 				}
 			}
 		}
