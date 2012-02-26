@@ -1,6 +1,7 @@
 package com.stuartkeith.soundcloud.recorder.view 
 {
 	import flash.display.Sprite;
+	import flash.events.Event;
 	
 	public class MainView extends Sprite 
 	{
@@ -9,6 +10,18 @@ package com.stuartkeith.soundcloud.recorder.view
 		public function MainView() 
 		{
 			super();
+			
+			if (stage)
+				init();
+			else
+				addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+		
+		protected function init(event:Event=null):void
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			
+			stage.addEventListener(Event.RESIZE, centreChildView, false, 0, true);
 		}
 		
 		protected function changeChildView(view:Sprite):void
@@ -22,8 +35,16 @@ package com.stuartkeith.soundcloud.recorder.view
 			{
 				addChild(childView);
 				
+				centreChildView();
+			}
+		}
+		
+		protected function centreChildView(event:Event=null):void 
+		{
+			if (childView)
+			{
 				childView.x = (stage.stageWidth / 2) - (childView.width / 2);
-				childView.y = (stage.stageHeight / 2 ) - (childView.height / 2);
+				childView.y = (stage.stageHeight / 2) - (childView.height / 2);
 			}
 		}
 		
