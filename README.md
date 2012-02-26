@@ -63,3 +63,4 @@ Possible Improvements
 - Take appropriate action if a microphone is absent/not supported.
 - Have a separate parser class that parses the XML, so JSON parsing could
   easily be added later.
+- Improve appearance of alternative content for non-Flash users.
