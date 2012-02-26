@@ -15,7 +15,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			super(null, 0, 0, getTitleString());
 			
 			width = 320;
-			height = 240;
+			height = 164;
 			draggable = false;
 			
 			var vBox:VBox = new VBox(this, 8, 8);

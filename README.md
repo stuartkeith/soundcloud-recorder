@@ -46,7 +46,6 @@ Possible Improvements
 ---------------------
 
 - Check source comments.
-- Neaten up component dimensions.
 - Check model/VO names.
 - WAVE file should not be built every time, only when recording changes.
 - Merge UploadEvent and UploadRequestEvent.
