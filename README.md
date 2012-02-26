@@ -26,13 +26,9 @@ a link to download Flash.
 Recorded sounds are stored and played back using linked lists, for performance
 reasons. See http://wonderfl.net/c/zKzb/
 
-
-Issues
-------
-
-- Flash does not send progress events when uploading files, except when using
-  FileReference - which only works with files selected by the user from their
-  hard drive. So upload progress cannot be shown.
+Configuration (maximum recording time, SoundClient client ID, required URLs) is
+specified in index.html, so the Flash content does not need to be rebuilt if
+configuration needs change.
 
 
 Libraries
@@ -41,26 +37,76 @@ Libraries
 SoundCloud Recorder uses the following third-party libraries:
 
 - MinimalComps (https://github.com/minimalcomps/minimalcomps)
+  A lightweight set of components. Chosen for small file size and low memory
+  footprint. Downside is minimal layout support and customisation of
+  appearance.
+  
 - MultipartURLLoader (https://github.com/markpasc/MultipartURLLoader)
+  Used to easily create a multipart/form-data POST request with variables and
+  files.
+  
 - Robotlegs (https://github.com/robotlegs/robotlegs-framework)
+  Used to help separate the project into models, views, mediators, and
+  commands. Reduces boilerplate code. Encourages loose coupling, making it 
+  easier to refactor and add components.
+
 - swfobject (https://github.com/swfobject/swfobject)
+  Used to insert the SWF into the HTML page, or provide alternative content if
+  that cannot be done.
+
+
+Issues
+------
+
+- Flash does not send progress events when uploading files, except when using
+  FileReference - which only works with files selected by the user from their
+  hard drive. So upload progress (bytes uploaded/bytes total) cannot be shown.
 
 
 Assets
 ------
 
-- Loading spinner animation: http://labs.wondergroup.com/programs/flash/loading-spinner-animations-for-flash/
-- Microphone icon: http://chrfb.deviantart.com/art/quot-ecqlipse-2-quot-PNG-59941546
+- Loading spinner animation:
+  http://labs.wondergroup.com/programs/flash/loading-spinner-animations-for-flash/
+
+- Microphone icon:
+  http://chrfb.deviantart.com/art/quot-ecqlipse-2-quot-PNG-59941546
 
 
-Possible Improvements
----------------------
+Possible Improvements/Outstanding Issues
+----------------------------------------
 
-- Check source comments.
+- Add a preloader.
+
+- Look at MP3 encoding library for ActionScript to shorten upload times.
+
+- The authorisation process could be improved substantially - when the callback
+  URL is called, JavaScript could be used to parse the access token and expiry
+  time (converting it into a Date object), store that data in LocalStorage via
+  toJSON(), then refresh the page without the query params (to avoid the user
+  bookmarking the page with the query params in it). The Date object could then
+  be checked when the user returns to the page, with a prompt to re-authorise
+  if the token is due to expire soon.
+
+- Visual appearance of the app could be improved.
+
+- MinimalComponents could be replaced with Flex. MinimalComps does not seem to
+  remove event listeners it creates when components are taken off the stage, so
+  it creates a small memory leak problem.
+
 - Listen for IO Errors and Security Errors in the SoundCloudService.
+
+- Investigate workarounds to get upload progress when uploading sound
+  (sockets?).
+
 - Handle invalid query strings (will throw an error at present).
+
 - Add event metadata.
-- Take appropriate action if a microphone is absent/not supported.
+
+- Take appropriate action if a microphone is absent/not supported/blocked by
+  user.
+
 - Have a separate parser class that parses the XML, so JSON parsing could
   easily be added later.
+
 - Improve appearance of alternative content for non-Flash users.
