@@ -31,7 +31,8 @@ package com.stuartkeith.soundcloud.recorder.service
 			multipartURLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError, false, 0, false);
 		}
 		
-		public function uploadSound(waveBuffer:ByteArray, accessToken:String, $soundVO:SoundVO):void
+		public function uploadSound(soundCloudTrackURL:String, waveBuffer:ByteArray, accessToken:String,
+				$soundVO:SoundVO):void
 		{
 			if (!soundVO)
 			{
@@ -51,7 +52,7 @@ package com.stuartkeith.soundcloud.recorder.service
 				
 				try
 				{
-					multipartURLLoader.load("https://api.soundcloud.com/tracks.xml");
+					multipartURLLoader.load(soundCloudTrackURL);
 				}
 				catch (error:Error)
 				{

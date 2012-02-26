@@ -6,11 +6,13 @@ package com.stuartkeith.soundcloud.recorder.vo
 		public var authorisationURL:String;
 		public var clientID:String;
 		public var redirectURI:String;
+		public var trackURL:String;
 		
 		public function SoundCloudConfigurationVO(parameters:Object)
 		{
 			clientID = parameters.soundCloudClientID;
 			redirectURI = parameters.soundCloudRedirectURI;
+			trackURL = parameters.soundCloudTrackURL;
 			
 			var URLTemplate:String = parameters.soundCloudAuthorisationURLTemplate;
 			

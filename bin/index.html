@@ -58,7 +58,8 @@
 			// SoundCloud's authorisation URL as a template
 			// must be escaped - otherwise special characters can be cut off when read by Flash
 			// must contain $CLIENT_ID$ and $REDIRECT_URI$ to be parsed properly
-			soundCloudAuthorisationURLTemplate: escape("https://soundcloud.com/connect?client_id=$CLIENT_ID$&response_type=token&redirect_uri=$REDIRECT_URI$")
+			soundCloudAuthorisationURLTemplate: escape("https://soundcloud.com/connect?client_id=$CLIENT_ID$&response_type=token&redirect_uri=$REDIRECT_URI$"),
+			soundCloudTrackURL: "https://api.soundcloud.com/tracks.xml"
 		};
 		
 		var params = {
