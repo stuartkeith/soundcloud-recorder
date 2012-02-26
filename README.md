@@ -56,9 +56,9 @@ Possible Improvements
 - Check source comments.
 - Check model/VO names.
 - WAVE file should not be built every time, only when recording changes.
-- Are relevant errors being listened to/acted upon?
+- Listen for IO Errors and Security Errors in the SoundCloudService.
+- Handle invalid query strings (will throw an error at present).
 - Add event metadata.
-- Invalid query strings cause the application to throw an unhandled error.
 - Event listeners in views are not removed when view is removed.
 - Does not take appropriate action if a microphone is absent/not supported.
 - Could have a separate parser class that parses the XML, so JSON parsing could

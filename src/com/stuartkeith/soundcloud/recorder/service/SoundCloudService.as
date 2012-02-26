@@ -26,9 +26,9 @@ package com.stuartkeith.soundcloud.recorder.service
 			
 			multipartURLLoader.addEventListener(Event.COMPLETE, onComplete, false, 0, false);
 			multipartURLLoader.addEventListener(ProgressEvent.PROGRESS, onProgress, false, 0, false);
-			multipartURLLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError, false, 0, false);
+			// multipartURLLoader.addEventListener(IOErrorEvent.IO_ERROR, onIOError, false, 0, false);
 			multipartURLLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, onHTTPStatus, false, 0, false);
-			multipartURLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError, false, 0, false);
+			// multipartURLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError, false, 0, false);
 		}
 		
 		public function uploadSound(soundCloudTrackURL:String, waveBuffer:ByteArray, accessToken:String,
