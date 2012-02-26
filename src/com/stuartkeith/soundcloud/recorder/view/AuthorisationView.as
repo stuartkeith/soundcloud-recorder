@@ -3,20 +3,25 @@ package com.stuartkeith.soundcloud.recorder.view
 	import com.bit101.components.Text;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
-	import flash.display.DisplayObjectContainer;
 	
 	public class AuthorisationView extends Window 
 	{
+		// components:
 		protected var text:Text;
 		protected var connectButton:ConnectButton;
 		
 		public function AuthorisationView()
 		{
-			super(null, 0, 0, getTitleString());
+			super();
 			
+			// set up the window:
+			
+			title = getTitleString();
 			width = 320;
 			height = 164;
 			draggable = false;
+			
+			// create components:
 			
 			var vBox:VBox = new VBox(this, 8, 8);
 			vBox.alignment = VBox.CENTER;

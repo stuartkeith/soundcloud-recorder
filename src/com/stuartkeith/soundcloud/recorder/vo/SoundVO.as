@@ -4,6 +4,7 @@ package com.stuartkeith.soundcloud.recorder.vo
 	{
 		public var title:String = "Untitled";
 		public var tags:String = "";
+		// should be "public" or "private".
 		public var sharing:String = "private";
 		public var permalinkURL:String = "";
 		

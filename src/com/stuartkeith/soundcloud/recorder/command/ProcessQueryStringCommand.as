@@ -20,7 +20,7 @@ package com.stuartkeith.soundcloud.recorder.command
 		
 		override public function execute():void 
 		{
-			// call the JavaScript function that returns the query string
+			// call the JavaScript function that returns the query string.
 			var queryString:String = ExternalInterface.call("getQueryString");
 			
 			if (queryString)
@@ -29,7 +29,7 @@ package com.stuartkeith.soundcloud.recorder.command
 				var urlVariables:URLVariables = new URLVariables(queryString);
 				
 				// if there's an access token available, store it in
-				// soundCloudConfigurationVO and dispatch an event
+				// soundCloudConfigurationVO and dispatch an event.
 				if (urlVariables.access_token)
 				{
 					soundCloudConfigurationVO.accessToken = urlVariables.access_token;
@@ -38,7 +38,7 @@ package com.stuartkeith.soundcloud.recorder.command
 					
 					return;
 				}
-				// if there's been an error, dispatch an event
+				// if there's been an error, dispatch an event.
 				else if (urlVariables.error)
 				{
 					dispatch(new AuthorisationErrorEvent(AuthorisationErrorEvent.AUTHORISATION_ERROR,

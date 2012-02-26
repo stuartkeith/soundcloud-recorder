@@ -14,6 +14,7 @@ package
 		{
 			stage.align = StageAlign.TOP_LEFT;
 			
+			// create the Robotlegs context.
 			mainContext = new MainContext(this);
 			
 			if (stage)
@@ -26,6 +27,8 @@ package
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
+			// add the MainView after the main sprite has been added so the
+			// mediator will be automatically mapped.
 			addChild(new MainView());
 		}
 	}

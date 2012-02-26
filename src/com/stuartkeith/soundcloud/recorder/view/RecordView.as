@@ -9,35 +9,35 @@ package com.stuartkeith.soundcloud.recorder.view
 	
 	public class RecordView extends Window 
 	{
-		// list of possible states this view supports, for use by mediator
+		// list of possible states this view supports, for use by mediator.
 		// usage: recordView.changeState(RecordView.STATE_INITIAL);
 		public static const STATE_INITIAL:String = "stateInitial";
 		public static const STATE_RECORDING:String = "stateRecording";
 		public static const STATE_RECORDED:String = "stateRecorded";
 		public static const STATE_PLAYING:String = "statePlaying";
 		
-		// list of events this view dispatches (components are not accessed directly by mediator)
+		// list of events this view dispatches (components are not accessed directly by mediator).
 		public static const EVENT_RECORD:String = "eventRecord";
 		public static const EVENT_RECORD_STOP:String = "eventRecordStop";
 		public static const EVENT_PLAY:String = "eventPlay";
 		public static const EVENT_PLAY_STOP:String = "eventPlayStop";
 		public static const EVENT_UPLOAD:String = "eventUpload";
 		
-		// maps states with events for the record button
-		// if a match is not found, no event is dispatched
+		// maps states with events for the record button.
+		// if a match is not found, no event is dispatched.
 		protected static const recordButtonEventTypes:Object = {
 			"stateInitial": "eventRecord",
 			"stateRecording": "eventRecordStop",
 			"stateRecorded": "eventRecord"
 		};
 		
-		// as above, but maps states with events for the play button
+		// as above, but maps states with events for the play button.
 		protected static const playButtonEventTypes:Object = {
 			"stateRecorded": "eventPlay",
 			"statePlaying": "eventPlayStop"
 		};
 		
-		// maps states to a desired window title
+		// maps states to a desired window title.
 		protected static const stateTitles:Object = {
 			"stateInitial": "Record a Sound",
 			"stateRecording": "Recording a Sound...",
@@ -45,10 +45,10 @@ package com.stuartkeith.soundcloud.recorder.view
 			"statePlaying": "Playing the Sound"
 		};
 		
-		// set the currentState to the initial state
+		// set the currentState to the initial state.
 		protected var currentState:String = STATE_INITIAL;
 		
-		// components used by this view
+		// components used by this view:
 		protected var microphoneActivityView:MicrophoneActivityView;
 		protected var timeView:TimeView;
 		protected var recordButton:RecordButton;
@@ -57,9 +57,9 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		public function RecordView() 
 		{
-			super(null, 0, 0, "");
+			super();
 			
-			// set up the window
+			// set up the window:
 			
 			width = 440;
 			height = 152;
@@ -67,7 +67,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			var spacing:int = 8;
 			
-			// create the containers
+			// create the containers:
 			
 			var hBox:HBox = new HBox();
 			hBox.x = spacing;
@@ -82,7 +82,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			vBox.alignment = VBox.CENTER;
 			vBox.spacing = spacing;
 			
-			// create components and add listeners
+			// create components and add listeners:
 			
 			microphoneActivityView = new MicrophoneActivityView();
 			microphoneActivityView.width = 32;
@@ -103,7 +103,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			uploadButton.width += spacing * 4;
 			uploadButton.addEventListener(MouseEvent.CLICK, onUploadButtonClicked, false, 0, true);
 			
-			// add components to containers
+			// add components to containers:
 			
 			addChild(hBox);
 			
@@ -122,7 +122,6 @@ package com.stuartkeith.soundcloud.recorder.view
 		public function changeState(state:String):void
 		{
 			// if a new state is specified, invalidate the component so it will be redrawn on the next frame
-			
 			if (state != currentState)
 			{
 				currentState = state;

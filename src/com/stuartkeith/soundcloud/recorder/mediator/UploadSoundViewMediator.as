@@ -7,7 +7,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 	{
 		override public function onRegister():void 
 		{
-			// pass the event on
+			// pass the event on.
 			addViewListener(UploadEvent.REQUEST_UPLOAD, dispatch, UploadEvent);
 		}
 	}

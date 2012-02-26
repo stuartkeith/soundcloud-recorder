@@ -15,26 +15,28 @@ package com.stuartkeith.soundcloud.recorder.view
 	
 	public class UploadSoundView extends Window 
 	{
-		// components used by this view
+		// components used by this view:
 		
 		protected var soundTitleInputText:InputText;
 		protected var soundIsPublicCheckBox:CheckBox;
 		protected var soundTagsInputText:InputText;
 		protected var uploadButton:PushButton;
 		
-		public function UploadSoundView(parent:DisplayObjectContainer=null) 
+		public function UploadSoundView() 
 		{
-			super(parent, 0, 0, "Upload the Sound to SoundCloud");
+			super();
 			
-			// set up the window
+			// set up the window:
 			
+			title = "Upload the Sound to SoundCloud";
 			width = 182;
 			height = 108 + titleBar.height;
 			draggable = false;
 			
 			var spacing:int = 8;
 			
-			// create containers
+			// create containers:
+			
 			var vBox:VBox = new VBox();
 			vBox.alignment = VBox.CENTER;
 			vBox.x = spacing;
@@ -47,7 +49,8 @@ package com.stuartkeith.soundcloud.recorder.view
 			var tagsHBox:HBox = new HBox();
 			tagsHBox.spacing = spacing;
 			
-			// create components and add listeners
+			// create components and add listeners:
+			
 			soundTitleInputText = new InputText();
 			soundTitleInputText.width = 128;
 			soundTitleInputText.addEventListener(Event.CHANGE, soundTitleInputText_CHANGE_listener, false, 0, true);
@@ -63,7 +66,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			uploadButton.label = "Upload";
 			uploadButton.addEventListener(MouseEvent.CLICK, uploadButton_CLICK_listener, false, 0, true);
 			
-			// add components to container
+			// add components to container:
 			
 			addChild(vBox);
 			
@@ -81,6 +84,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		protected function soundTitleInputText_CHANGE_listener(event:Event):void 
 		{
+			// only enable the upload button if the sound has a title.
 			uploadButton.enabled = soundTitleInputText.text.length > 0;
 		}
 		

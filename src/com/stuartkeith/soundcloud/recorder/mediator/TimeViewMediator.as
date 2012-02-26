@@ -22,6 +22,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		{
 			timeView.currentTime = event.secondsWritten;
 			timeView.finishTime = event.secondsTotal;
+			// only show the current time if the user is recording or playing back a sound.
 			timeView.showCurrentTime = event.type == SoundProgressEvent.PLAYBACK_PROGRESS ||
 					event.type == SoundProgressEvent.RECORD_PROGRESS;
 		}

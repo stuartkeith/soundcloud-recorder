@@ -6,20 +6,20 @@ package com.stuartkeith.soundcloud.recorder.view
 	
 	public class TimeView extends Component 
 	{
-		// components
+		// components:
 		protected var currentTimeLabel:LabelAligned;
 		protected var startTimeLabel:LabelAligned;
 		protected var finishTimeLabel:LabelAligned;
 		protected var timeTotalSprite:Sprite;
 		protected var timeElapsedSprite:Sprite;
 		
-		// values
+		// values:
 		protected var _currentTime:int;
 		protected var _startTime:int;
 		protected var _finishTime:int;
 		protected var _showCurrentTime:Boolean;
 		
-		// flags
+		// flags:
 		protected var sizeIsDirty:Boolean = true;
 		protected var currentTimeIsDirty:Boolean = true;
 		protected var startTimeIsDirty:Boolean = true;
@@ -55,6 +55,15 @@ package com.stuartkeith.soundcloud.recorder.view
 		override public function set height(value:Number):void 
 		{
 			super.height = value;
+			
+			sizeIsDirty = true;
+			
+			invalidate();
+		}
+		
+		override public function setSize(w:Number, h:Number):void 
+		{
+			super.setSize(w, h);
 			
 			sizeIsDirty = true;
 			
@@ -187,7 +196,7 @@ package com.stuartkeith.soundcloud.recorder.view
 				
 				currentTimeLabel.text = secondsToLabel(_currentTime);
 				
-				// position the currentTimeLabel .
+				// position the currentTimeLabel, centred above the current time.
 				currentTimeLabel.x = timeTotalSprite.x + Math.ceil(timeTotalSprite.width * currentTimeAsRatio) - (currentTimeLabel.width / 2);
 			}
 			

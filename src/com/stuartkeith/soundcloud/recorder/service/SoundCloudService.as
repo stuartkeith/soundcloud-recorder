@@ -97,6 +97,7 @@ package com.stuartkeith.soundcloud.recorder.service
 		
 		protected function onComplete(event:Event):void 
 		{
+			// parse the response data.
 			var response:XML = new XML(multipartURLLoader.data);
 			
 			soundVO.permalinkURL = response["permalink-url"];

@@ -10,7 +10,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		[Embed(@source="asset/microphoneIcon.png")]
 		protected static const MicrophoneIcon:Class;
 		
-		// how quickly the value drops down if the requested value
+		// this is the value the meter drops by if the requested value
 		// is lower than the current value.
 		protected static const METER_VELOCITY:Number = 0.037;
 		
@@ -43,7 +43,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		public function set value($value:Number):void 
 		{
-			// if the new value is more than the current value,
+			// if the new value is higher than the current value,
 			// update the meter straight away, so peaks in the audio
 			// are shown.
 			if ($value > _value)
@@ -82,6 +82,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			activityShape.y = height;
 			activityShape.scaleY = 0;
 			
+			// centre the icon.
 			microphoneIcon.x = (width / 2) - (microphoneIcon.width / 2);
 			microphoneIcon.y = height - microphoneIcon.height - microphoneIcon.x;
 		}

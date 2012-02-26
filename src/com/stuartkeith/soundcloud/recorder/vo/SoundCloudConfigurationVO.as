@@ -2,13 +2,17 @@ package com.stuartkeith.soundcloud.recorder.vo
 {
 	public class SoundCloudConfigurationVO 
 	{
+		// the access token passed via the query string.
 		public var accessToken:String;
+		// SoundCloud's authorisation URL
 		public var authorisationURL:String;
+		// the app's client ID.
 		public var clientID:String;
-		// the maximum number of seconds the service will record for until it
-		// automatically stops recording.
+		// the maximimum length of a recorded sound.
 		public var maxRecordingTimeSeconds:int;
+		// SoundCloud redirects back to this URI post-authorisation.
 		public var redirectURI:String;
+		// the URL to which the app should upload recorded sounds.
 		public var trackURL:String;
 		
 		public function SoundCloudConfigurationVO(parameters:Object)
@@ -18,9 +22,10 @@ package com.stuartkeith.soundcloud.recorder.vo
 			redirectURI = parameters.soundCloudRedirectURI;
 			trackURL = parameters.soundCloudTrackURL;
 			
-			var URLTemplate:String = parameters.soundCloudAuthorisationURLTemplate;
+			// render the authorisation template.
+			var urlTemplate:String = parameters.soundCloudAuthorisationURLTemplate;
 			
-			authorisationURL = URLTemplate.replace("$CLIENT_ID$", clientID).replace("$REDIRECT_URI$", redirectURI);
+			authorisationURL = urlTemplate.replace("$CLIENT_ID$", clientID).replace("$REDIRECT_URI$", redirectURI);
 		}
 	}
 }

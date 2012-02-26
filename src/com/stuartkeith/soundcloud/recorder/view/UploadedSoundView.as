@@ -17,14 +17,14 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			soundVO = $soundVO;
 			
-			// set up the window.
+			// set up the window:
 			
 			width = 304;
 			height = 110;
 			title = "Uploaded to SoundCloud!";
 			draggable = false;
 			
-			// create containers
+			// create containers:
 			
 			var vBox:VBox = new VBox();
 			vBox.spacing = 8;
@@ -32,7 +32,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			vBox.y = vBox.spacing;
 			vBox.alignment = VBox.CENTER;
 			
-			// create components
+			// create components:
 			
 			var soundTitleLabel:Label = new Label();
 			soundTitleLabel.text = "'" + soundVO.title + "' was successfully uploaded.";
@@ -49,7 +49,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			recordAnotherSoundButton.addEventListener(MouseEvent.CLICK, recordAnotherSoundButton_CLICK_listener,
 					false, 0, true);
 			
-			// add components to container
+			// add components to container:
 			
 			addChild(vBox);
 			

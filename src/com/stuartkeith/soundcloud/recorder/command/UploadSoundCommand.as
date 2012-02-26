@@ -17,7 +17,7 @@ package com.stuartkeith.soundcloud.recorder.command
 		
 		override public function execute():void 
 		{
-			// convert the recordingBuffer to a format SoundCloud will understand: a 32 bit mono WAVE file.
+			// convert the recordedSampleBufferModel to a format SoundCloud will understand: a 32 bit mono WAVE file.
 			var waveBuffer:ByteArray = WaveFormat.writeWaveFormat(1, 44100, recordingModel.recordedSampleBufferModel);
 			
 			soundCloudService.uploadSound(soundCloudConfigurationVO.trackURL, waveBuffer,
