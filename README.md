@@ -24,6 +24,14 @@ not on a mobile device and they do not have Flash installed, they are given
 a link to download Flash.
 
 
+Issues
+------
+
+- Flash does not send progress events when uploading files, except when using
+  FileReference - which only works with files selected by the user from their
+  hard drive. So upload progress cannot be shown.
+
+
 Libraries
 ---------
 
