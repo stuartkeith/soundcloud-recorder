@@ -23,6 +23,9 @@ a link to the relevant official SoundCloud app for their device. If the user is
 not on a mobile device and they do not have Flash installed, they are given
 a link to download Flash.
 
+Recorded sounds are stored and played back using linked lists, for performance
+reasons. See http://wonderfl.net/c/zKzb/
+
 
 Issues
 ------
@@ -54,11 +57,9 @@ Possible Improvements
 ---------------------
 
 - Check source comments.
-- Check model/VO names.
-- WAVE file should not be built every time, only when recording changes.
 - Listen for IO Errors and Security Errors in the SoundCloudService.
 - Handle invalid query strings (will throw an error at present).
 - Add event metadata.
-- Does not take appropriate action if a microphone is absent/not supported.
-- Could have a separate parser class that parses the XML, so JSON parsing could
+- Take appropriate action if a microphone is absent/not supported.
+- Have a separate parser class that parses the XML, so JSON parsing could
   easily be added later.
