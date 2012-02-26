@@ -40,12 +40,14 @@ package com.stuartkeith.soundcloud.recorder.view
 			var soundPermalinkURLButton:PushButton = new PushButton();
 			soundPermalinkURLButton.width = width - (vBox.spacing * 2);
 			soundPermalinkURLButton.label = "View '" + soundVO.title + "' on SoundCloud";
-			soundPermalinkURLButton.addEventListener(MouseEvent.CLICK, soundPermalinkURLButton_CLICK_listener);
+			soundPermalinkURLButton.addEventListener(MouseEvent.CLICK, soundPermalinkURLButton_CLICK_listener,
+					false, 0, true);
 			
 			var recordAnotherSoundButton:PushButton = new PushButton();
 			recordAnotherSoundButton.width = soundPermalinkURLButton.width;
 			recordAnotherSoundButton.label = "Record another sound";
-			recordAnotherSoundButton.addEventListener(MouseEvent.CLICK, recordAnotherSoundButton_CLICK_listener);
+			recordAnotherSoundButton.addEventListener(MouseEvent.CLICK, recordAnotherSoundButton_CLICK_listener,
+					false, 0, true);
 			
 			// add components to container
 			

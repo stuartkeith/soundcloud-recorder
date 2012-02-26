@@ -59,7 +59,6 @@ Possible Improvements
 - Listen for IO Errors and Security Errors in the SoundCloudService.
 - Handle invalid query strings (will throw an error at present).
 - Add event metadata.
-- Event listeners in views are not removed when view is removed.
 - Does not take appropriate action if a microphone is absent/not supported.
 - Could have a separate parser class that parses the XML, so JSON parsing could
   easily be added later.

@@ -50,7 +50,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			// create components and add listeners
 			soundTitleInputText = new InputText();
 			soundTitleInputText.width = 128;
-			soundTitleInputText.addEventListener(Event.CHANGE, soundTitleInputText_CHANGE_listener);
+			soundTitleInputText.addEventListener(Event.CHANGE, soundTitleInputText_CHANGE_listener, false, 0, true);
 			
 			soundIsPublicCheckBox = new CheckBox();
 			soundIsPublicCheckBox.label = "Share publicly?";
@@ -61,7 +61,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			uploadButton = new PushButton();
 			uploadButton.enabled = false;
 			uploadButton.label = "Upload";
-			uploadButton.addEventListener(MouseEvent.CLICK, uploadButton_CLICK_listener);
+			uploadButton.addEventListener(MouseEvent.CLICK, uploadButton_CLICK_listener, false, 0, true);
 			
 			// add components to container
 			

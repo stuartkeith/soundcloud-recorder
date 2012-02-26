@@ -93,15 +93,15 @@ package com.stuartkeith.soundcloud.recorder.view
 			timeView.height = 32;
 			
 			recordButton = new RecordButton();
-			recordButton.addEventListener(MouseEvent.CLICK, onRecordButtonClicked);
+			recordButton.addEventListener(MouseEvent.CLICK, onRecordButtonClicked, false, 0, true);
 			
 			playButton = new PlayButton();
-			playButton.addEventListener(MouseEvent.CLICK, onPlayButtonClicked);
+			playButton.addEventListener(MouseEvent.CLICK, onPlayButtonClicked, false, 0, true);
 			
 			uploadButton = new PushButton();
 			uploadButton.label = "Upload to SoundCloud";
 			uploadButton.width += spacing * 4;
-			uploadButton.addEventListener(MouseEvent.CLICK, onUploadButtonClicked);
+			uploadButton.addEventListener(MouseEvent.CLICK, onUploadButtonClicked, false, 0, true);
 			
 			// add components to containers
 			
