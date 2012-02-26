@@ -1,8 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.view 
 {
-	import com.bit101.components.HBox;
 	import com.bit101.components.PushButton;
-	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -62,35 +60,14 @@ package com.stuartkeith.soundcloud.recorder.view
 			// set up the window:
 			
 			width = 440;
-			height = 152;
+			height = 148;
 			draggable = false;
-			
-			var spacing:int = 8;
-			
-			// create the containers:
-			
-			var hBox:HBox = new HBox();
-			hBox.x = spacing;
-			hBox.y = spacing;
-			hBox.spacing = spacing;
-			
-			var buttonHBox:HBox = new HBox();
-			buttonHBox.alignment = HBox.MIDDLE;
-			buttonHBox.spacing = 192;
-			
-			var vBox:VBox = new VBox();
-			vBox.alignment = VBox.CENTER;
-			vBox.spacing = spacing;
 			
 			// create components and add listeners:
 			
 			microphoneActivityView = new MicrophoneActivityView();
-			microphoneActivityView.width = 32;
-			microphoneActivityView.height = 116;
 			
 			timeView = new TimeView();
-			timeView.width = 384;
-			timeView.height = 32;
 			
 			recordButton = new RecordButton();
 			recordButton.addEventListener(MouseEvent.CLICK, onRecordButtonClicked, false, 0, true);
@@ -100,23 +77,38 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			uploadButton = new PushButton();
 			uploadButton.label = "Upload to SoundCloud";
-			uploadButton.width += spacing * 4;
 			uploadButton.addEventListener(MouseEvent.CLICK, onUploadButtonClicked, false, 0, true);
 			
-			// add components to containers:
+			// add and position components:
 			
-			addChild(hBox);
+			addChild(microphoneActivityView);
+			addChild(timeView);
+			addChild(recordButton);
+			addChild(playButton);
+			addChild(uploadButton);
 			
-			hBox.addChild(microphoneActivityView);
-			hBox.addChild(vBox);
+			var spacing:int = 8;
 			
-			vBox.addChild(timeView);
-			vBox.addChild(buttonHBox);
+			microphoneActivityView.x = spacing * 2;
+			microphoneActivityView.y = spacing * 2;
+			microphoneActivityView.width = 32;
+			microphoneActivityView.height = 96;
 			
-			buttonHBox.addChild(recordButton);
-			buttonHBox.addChild(playButton);
+			timeView.width = 368;
+			timeView.height = 32;
+			timeView.x = microphoneActivityView.x + microphoneActivityView.width + spacing;
+			timeView.y = 16;
 			
-			vBox.addChild(uploadButton);
+			recordButton.x = timeView.x + (spacing * 4);
+			recordButton.y = 64;
+			
+			playButton.x = recordButton.x + recordButton.width + (spacing * 2);
+			playButton.y = recordButton.y;
+			
+			uploadButton.width = 176;
+			uploadButton.height = 48;
+			uploadButton.x = playButton.x + playButton.width + (spacing * 2);
+			uploadButton.y = playButton.y;
 		}
 		
 		public function changeState(state:String):void

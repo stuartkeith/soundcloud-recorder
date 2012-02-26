@@ -149,7 +149,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			{
 				sizeIsDirty = false;
 				
-				var labelWidth:int = width / 10;
+				var labelWidth:int = 32;
 				var heightHalved:Number = height / 2;
 				
 				currentTimeLabel.width = startTimeLabel.width = finishTimeLabel.width = labelWidth;
