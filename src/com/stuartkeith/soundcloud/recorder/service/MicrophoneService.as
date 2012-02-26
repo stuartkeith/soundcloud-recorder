@@ -39,7 +39,6 @@ package com.stuartkeith.soundcloud.recorder.service
 				// this ensures the microphone access prompt will pop up now, rather than
 				// when the record button is pressed.
 				microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
-				microphone.removeEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
 			}
 		}
 		
@@ -53,9 +52,6 @@ package com.stuartkeith.soundcloud.recorder.service
 			if (recordingBuffer)
 				stopRecording();
 			
-			// add the event listener for the incoming sound data.
-			microphone.addEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
-			
 			// create a new buffer.
 			recordingBuffer = new ByteArray();
 			
@@ -68,8 +64,6 @@ package com.stuartkeith.soundcloud.recorder.service
 		{
 			if (recordingBuffer)
 			{
-				microphone.removeEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
-				
 				// rewind the buffer so any listeners don't have to do it.
 				recordingBuffer.position = 0;
 				
@@ -77,6 +71,24 @@ package com.stuartkeith.soundcloud.recorder.service
 				dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_COMPLETE, recordingBuffer));
 				
 				recordingBuffer = null;
+			}
+		}
+		
+		public function getActivityLevel():Number
+		{
+			if (microphone)
+			{
+				var activityLevel:Number = microphone.activityLevel;
+				
+				if (activityLevel != -1)
+					// activityLevel is 0 to 100: we want 0 to 1.
+					return activityLevel / 100;
+				else
+					return 0;
+			}
+			else
+			{
+				return 0;
 			}
 		}
 		
