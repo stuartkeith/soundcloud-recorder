@@ -2,12 +2,14 @@ package com.stuartkeith.soundcloud.recorder.mediator
 {
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.FrameworkEvent;
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.SoundProgressEvent;
+	import com.stuartkeith.soundcloud.recorder.service.MicrophoneService;
 	import com.stuartkeith.soundcloud.recorder.view.RecordView;
 	import flash.events.Event;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class RecordViewMediator extends Mediator 
 	{
+		[Inject] public var microphoneService:MicrophoneService;
 		[Inject] public var recordView:RecordView;
 		
 		override public function onRegister():void 
@@ -19,6 +21,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 			addContextListener(SoundProgressEvent.PLAYBACK_COMPLETE, PLAYBACK_COMPLETE_listener, SoundProgressEvent);
 			
 			// add view listeners.
+			addViewListener(Event.ENTER_FRAME, ENTER_FRAME_listener);
 			addViewListener(RecordView.EVENT_RECORD, EVENT_RECORD_listener, Event);
 			addViewListener(RecordView.EVENT_RECORD_STOP, EVENT_RECORD_STOP_listener, Event);
 			addViewListener(RecordView.EVENT_PLAY, EVENT_PLAY_listener, Event);
@@ -27,6 +30,11 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		}
 		
 		// view listeners:
+		
+		protected function ENTER_FRAME_listener(event:Event):void 
+		{
+			recordView.updateMicrophoneActivity(microphoneService.getActivityLevel());
+		}
 		
 		protected function EVENT_PLAY_listener(event:Event):void 
 		{

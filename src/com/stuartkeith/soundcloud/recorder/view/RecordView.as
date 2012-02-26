@@ -49,6 +49,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		protected var currentState:String = STATE_INITIAL;
 		
 		// components used by this view
+		protected var microphoneActivityView:MicrophoneActivityView;
 		protected var timeView:TimeView;
 		protected var recordButton:PushButton;
 		protected var playButton:PushButton;
@@ -60,8 +61,8 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			// set up the window
 			
-			width = 320;
-			height = 240;
+			width = 440;
+			height = 320;
 			draggable = false;
 			
 			var spacing:int = 8;
@@ -69,19 +70,26 @@ package com.stuartkeith.soundcloud.recorder.view
 			// create the containers
 			
 			var hBox:HBox = new HBox();
-			hBox.alignment = HBox.MIDDLE;
+			hBox.x = spacing;
+			hBox.y = spacing;
 			hBox.spacing = spacing;
+			
+			var buttonHBox:HBox = new HBox();
+			buttonHBox.alignment = HBox.MIDDLE;
+			buttonHBox.spacing = spacing;
 			
 			var vBox:VBox = new VBox();
 			vBox.alignment = VBox.CENTER;
 			vBox.spacing = spacing;
-			vBox.x = spacing;
-			vBox.y = spacing;
 			
 			// create components and add listeners
 			
+			microphoneActivityView = new MicrophoneActivityView();
+			microphoneActivityView.width = 32;
+			microphoneActivityView.height = 128;
+			
 			timeView = new TimeView();
-			timeView.width = width - (spacing * 2);
+			timeView.width = 384;
 			timeView.height = 32;
 			
 			recordButton = new PushButton();
@@ -99,12 +107,16 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			// add components to containers
 			
-			addChild(vBox);
-			vBox.addChild(timeView);
-			vBox.addChild(hBox);
+			addChild(hBox);
 			
-			hBox.addChild(recordButton);
-			hBox.addChild(playButton);
+			hBox.addChild(microphoneActivityView);
+			hBox.addChild(vBox);
+			
+			vBox.addChild(timeView);
+			vBox.addChild(buttonHBox);
+			
+			buttonHBox.addChild(recordButton);
+			buttonHBox.addChild(playButton);
 			
 			vBox.addChild(uploadButton);
 		}
@@ -119,6 +131,11 @@ package com.stuartkeith.soundcloud.recorder.view
 				
 				invalidate();
 			}
+		}
+		
+		public function updateMicrophoneActivity(value:Number):void
+		{
+			microphoneActivityView.value = value;
 		}
 		
 		override public function draw():void 

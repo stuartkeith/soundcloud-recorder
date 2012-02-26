@@ -4,10 +4,12 @@ SoundCloud Recorder
 Loading spinner animation from:
 http://labs.wondergroup.com/programs/flash/loading-spinner-animations-for-flash/
 
+Microphone icon from:
+http://chrfb.deviantart.com/art/quot-ecqlipse-2-quot-PNG-59941546
+
 TODO
 ----
 
-- Audio visualisation.
 - Larger play and record buttons.
 - Check source comments.
 - Expand this README.
