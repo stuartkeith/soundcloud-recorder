@@ -76,7 +76,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			var buttonHBox:HBox = new HBox();
 			buttonHBox.alignment = HBox.MIDDLE;
-			buttonHBox.spacing = spacing;
+			buttonHBox.spacing = 192;
 			
 			var vBox:VBox = new VBox();
 			vBox.alignment = VBox.CENTER;
