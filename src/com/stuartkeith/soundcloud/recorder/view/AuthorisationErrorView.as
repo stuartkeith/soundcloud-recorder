@@ -15,7 +15,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		override protected function getTitleString():String 
 		{
-			return "Authorisation Error";
+			return "SoundCloud Authorisation Error";
 		}
 		
 		override protected function getLabelString():String 

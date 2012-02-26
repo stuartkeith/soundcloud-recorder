@@ -1,6 +1,7 @@
 package com.stuartkeith.soundcloud.recorder.view 
 {
 	import com.bit101.components.CheckBox;
+	import com.bit101.components.HBox;
 	import com.bit101.components.InputText;
 	import com.bit101.components.Label;
 	import com.bit101.components.PushButton;
@@ -22,31 +23,39 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		public function UploadSoundView(parent:DisplayObjectContainer=null) 
 		{
-			super(parent, 0, 0, "Upload to SoundCloud");
+			super(parent, 0, 0, "Upload the Sound to SoundCloud");
 			
 			// set up the window
 			
-			width = 320;
-			height = 240;
+			width = 182;
+			height = 108 + titleBar.height;
 			draggable = false;
 			
 			var spacing:int = 8;
 			
-			// create container
+			// create containers
 			var vBox:VBox = new VBox();
 			vBox.alignment = VBox.CENTER;
 			vBox.x = spacing;
 			vBox.y = spacing;
 			vBox.spacing = spacing;
 			
+			var titleHBox:HBox = new HBox();
+			titleHBox.spacing = spacing;
+			
+			var tagsHBox:HBox = new HBox();
+			tagsHBox.spacing = spacing;
+			
 			// create components and add listeners
 			soundTitleInputText = new InputText();
+			soundTitleInputText.width = 128;
 			soundTitleInputText.addEventListener(Event.CHANGE, soundTitleInputText_CHANGE_listener);
 			
 			soundIsPublicCheckBox = new CheckBox();
 			soundIsPublicCheckBox.label = "Share publicly?";
 			
 			soundTagsInputText = new InputText();
+			soundTagsInputText.width = 128;
 			
 			uploadButton = new PushButton();
 			uploadButton.enabled = false;
@@ -57,11 +66,15 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			addChild(vBox);
 			
-			vBox.addChild(new Label(null, 0, 0, "Title:"));
-			vBox.addChild(soundTitleInputText);
+			titleHBox.addChild(new Label(null, 0, 0, "Title:"));
+			titleHBox.addChild(soundTitleInputText);
+			vBox.addChild(titleHBox)
+			
+			tagsHBox.addChild(new Label(null, 0, 0, "Tags:"));
+			tagsHBox.addChild(soundTagsInputText);
+			vBox.addChild(tagsHBox);
+			
 			vBox.addChild(soundIsPublicCheckBox);
-			vBox.addChild(new Label(null, 0, 0, "Tags:"));
-			vBox.addChild(soundTagsInputText);
 			vBox.addChild(uploadButton);
 		}
 		

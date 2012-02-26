@@ -62,7 +62,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			// set up the window
 			
 			width = 440;
-			height = 320;
+			height = 152;
 			draggable = false;
 			
 			var spacing:int = 8;
@@ -86,7 +86,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			microphoneActivityView = new MicrophoneActivityView();
 			microphoneActivityView.width = 32;
-			microphoneActivityView.height = 128;
+			microphoneActivityView.height = 116;
 			
 			timeView = new TimeView();
 			timeView.width = 384;

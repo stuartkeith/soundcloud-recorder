@@ -36,7 +36,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		protected function getTitleString():String
 		{
-			return "Authorisation Required";
+			return "SoundCloud Authorisation Required";
 		}
 		
 		protected function getLabelString():String

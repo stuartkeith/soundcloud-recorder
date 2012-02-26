@@ -75,7 +75,7 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		public function showUploadingSoundView():void
 		{
-			changeChildView(new SpinnerView("Uploading sound to SoundCloud..."));
+			changeChildView(new SpinnerView("Uploading Sound to SoundCloud..."));
 		}
 		
 		public function showUploadedSoundView(title:String, permalinkURL:String):void
