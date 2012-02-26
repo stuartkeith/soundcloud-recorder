@@ -45,7 +45,6 @@ Assets
 Possible Improvements
 ---------------------
 
-- Larger play and record buttons.
 - Check source comments.
 - Neaten up component dimensions.
 - Check model/VO names.
