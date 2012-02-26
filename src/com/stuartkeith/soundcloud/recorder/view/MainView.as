@@ -37,6 +37,11 @@ package com.stuartkeith.soundcloud.recorder.view
 			changeChildView(new AuthorisationView());
 		}
 		
+		public function showConnectingToSoundCloudView():void
+		{
+			changeChildView(new SpinnerView("Connecting to SoundCloud..."));
+		}
+		
 		public function showRecordingView():void
 		{
 			changeChildView(new RecordView());

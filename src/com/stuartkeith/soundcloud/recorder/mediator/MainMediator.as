@@ -19,6 +19,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 			addContextListener(FrameworkEvent.AUTHORISATION_REQUIRED, AUTHORISATION_REQUIRED_listener, Event);
 			addContextListener(FrameworkEvent.AUTHORISATION_SUCCESSFUL, AUTHORISATION_SUCCESSFUL_listener, Event);
 			addContextListener(FrameworkEvent.BEGIN_UPLOAD, BEGIN_UPLOAD_listener, Event);
+			addContextListener(FrameworkEvent.CONNECT_TO_SOUNDCLOUD, CONNECT_TO_SOUNDCLOUD_listener, Event);
 			addContextListener(UploadEvent.UPLOADING, UPLOADING_listener, UploadEvent);
 			addContextListener(UploadEvent.UPLOADED, UPLOADED_listener, UploadEvent);
 			
@@ -47,6 +48,11 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		protected function BEGIN_UPLOAD_listener(event:Event):void 
 		{
 			mainView.showUploadSoundView();
+		}
+		
+		protected function CONNECT_TO_SOUNDCLOUD_listener(event:Event):void 
+		{
+			mainView.showConnectingToSoundCloudView();
 		}
 		
 		protected function UPLOADING_listener(event:UploadEvent):void 

@@ -19,7 +19,6 @@ TODO
 - Merge UploadEvent and UploadRequestEvent.
 - Are relevant errors being listened to/acted upon?
 - Add event metadata.
-- Make spinner view generic, show when user clicks on button to SoundCloud authorisation page.
 - Listen to resize events and reposition MainView?
 - Invalid query strings cause the application to throw an unhandled error.
 - Event listeners in views are not removed when view is removed.
