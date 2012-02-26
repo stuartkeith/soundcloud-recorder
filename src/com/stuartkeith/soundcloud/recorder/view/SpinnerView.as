@@ -3,12 +3,12 @@ package com.stuartkeith.soundcloud.recorder.view
 	import com.bit101.components.Window;
 	import flash.display.Sprite;
 	
-	public class UploadingSoundView extends Window 
+	public class SpinnerView extends Window 
 	{
 		[Embed(source="asset/spinner.swf")]
 		protected var Spinner:Class;
 		
-		public function UploadingSoundView() 
+		public function SpinnerView($title:String) 
 		{
 			super();
 			
@@ -17,7 +17,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			width = 192;
 			height = 64;
 			draggable = false;
-			title = "Uploading to SoundCloud...";
+			title = $title;
 			
 			// add the spinner animation.
 			var spinner:Sprite = new Spinner();
