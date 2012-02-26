@@ -1,7 +1,7 @@
 package com.stuartkeith.soundcloud.recorder.frameworkEvent 
 {
+	import com.stuartkeith.soundcloud.recorder.model.SampleBufferModel;
 	import flash.events.Event;
-	import flash.utils.ByteArray;
 	
 	public class SoundProgressEvent extends Event 
 	{
@@ -13,43 +13,35 @@ package com.stuartkeith.soundcloud.recorder.frameworkEvent
 		public static const PLAYBACK_PROGRESS:String = "playbackProgress";
 		public static const PLAYBACK_COMPLETE:String = "playbackComplete";
 		
-		protected var _soundBuffer:ByteArray;
+		protected var _sampleBufferModel:SampleBufferModel;
 		protected var _samplesWritten:int;
 		protected var _samplesTotal:int;
 		protected var _secondsWritten:int;
 		protected var _secondsTotal:int;
 		
-		public function SoundProgressEvent(type:String, $soundBuffer:ByteArray, $bytesTotal:int=-1,
-				bubbles:Boolean = false, cancelable:Boolean=false) 
+		public function SoundProgressEvent(type:String, $sampleBufferModel:SampleBufferModel, $samplesWritten:int,
+				$samplesTotal:int, bubbles:Boolean = false, cancelable:Boolean=false) 
 		{
 			super(type, bubbles, cancelable);
 			
-			_soundBuffer = $soundBuffer;
+			_sampleBufferModel = $sampleBufferModel;
 			
-			// there are 4 bytes per sample, so divide by 4.
-			_samplesWritten = $soundBuffer.position / 4;
+			_samplesWritten = $samplesWritten;
+			_samplesTotal = $samplesTotal;
 			
-			// if bytesTotal is not specified, use the number
-			// of bytes in the soundBuffer instead.
-			if ($bytesTotal < 0)
-				_samplesTotal = $soundBuffer.length / 4;
-			else
-				_samplesTotal = $bytesTotal / 4;
-			
-			// there are 44100 samples per second, so divide
-			// by 44100.
-			_secondsWritten = Math.floor(_samplesWritten / 44100);
-			_secondsTotal = Math.floor(_samplesTotal / 44100);
+			// there are 44100 samples per second, so divide by 44100.
+			_secondsWritten = _samplesWritten / 44100;
+			_secondsTotal = _samplesTotal / 44100;
 		}
 		
 		override public function clone():Event 
 		{
-			return new SoundProgressEvent(type, _soundBuffer, _samplesTotal, bubbles, cancelable);
+			return new SoundProgressEvent(type, _sampleBufferModel, _samplesWritten, _samplesTotal, bubbles, cancelable);
 		}
 		
-		public function get soundBuffer():ByteArray 
+		public function get sampleBufferModel():SampleBufferModel 
 		{
-			return _soundBuffer;
+			return _sampleBufferModel;
 		}
 		
 		public function get samplesWritten():int 

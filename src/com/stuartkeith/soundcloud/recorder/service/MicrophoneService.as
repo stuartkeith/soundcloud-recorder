@@ -1,6 +1,8 @@
 package com.stuartkeith.soundcloud.recorder.service 
 {
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.SoundProgressEvent;
+	import com.stuartkeith.soundcloud.recorder.model.SampleBufferModel;
+	import com.stuartkeith.soundcloud.recorder.vo.SampleVO;
 	import flash.events.SampleDataEvent;
 	import flash.media.Microphone;
 	import flash.utils.ByteArray;
@@ -8,15 +10,17 @@ package com.stuartkeith.soundcloud.recorder.service
 	
 	public class MicrophoneService extends Actor 
 	{
-		// the maximum number of bytes the service can store before it
+		// the maximum number of samples the service can store before it
 		// automatically stops recording.
-		protected var recordingBufferMaxBytes:int;
+		protected var recordingBufferMaxSamples:int;
 		
 		protected var microphone:Microphone;
 		
-		// the recorded data is stored in this byteArray.
+		// the recorded data is stored in this sampleBufferModel.
 		// set to null if not currently recording.
-		protected var recordingBuffer:ByteArray;
+		protected var sampleBufferModel:SampleBufferModel;
+		protected var currentSampleVO:SampleVO;
+		protected var samplesRemaining:int;
 		
 		public function MicrophoneService() 
 		{
@@ -26,6 +30,7 @@ package com.stuartkeith.soundcloud.recorder.service
 			// if no microphone is present, microphone will be null.
 			if (microphone)
 			{
+				// set the rate to 44100Hz.
 				microphone.rate = 44;
 				// prevent the microphone from becoming inactive.
 				microphone.setSilenceLevel(0);
@@ -38,37 +43,41 @@ package com.stuartkeith.soundcloud.recorder.service
 		
 		public function beginRecording(maxRecordingTimeSeconds:int):Boolean
 		{
-			// to convert from seconds to bytes:
-			// bytes = seconds * 44100 (samples per second) * 4 (bytes per sample)
-			recordingBufferMaxBytes = maxRecordingTimeSeconds * 44100 * 4;
-			
 			// if there's no microphone, we can't go any further.
 			if (!microphone)
 				return false;
 			
 			// if we're already recording, stop first.
-			if (recordingBuffer)
-				stopRecording();
+			stopRecording();
+			
+			// to convert from seconds to samples:
+			// seconds * 44100 (samples per second)
+			recordingBufferMaxSamples = maxRecordingTimeSeconds * 44100;
 			
 			// create a new buffer.
-			recordingBuffer = new ByteArray();
+			currentSampleVO = new SampleVO();
+			sampleBufferModel = new SampleBufferModel();
+			sampleBufferModel.sampleVOHead = currentSampleVO;
+			samplesRemaining = recordingBufferMaxSamples;
 			
-			dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_START, recordingBuffer, recordingBufferMaxBytes));
+			dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_START, sampleBufferModel,
+					sampleBufferModel.totalSamples, recordingBufferMaxSamples));
 			
 			return true;
 		}
 		
 		public function stopRecording():void
 		{
-			if (recordingBuffer)
+			if (sampleBufferModel)
 			{
-				// rewind the buffer so any listeners don't have to do it.
-				recordingBuffer.position = 0;
+				// the last sample would have been created but not set, so we'll set it to 0.
+				currentSampleVO.sample = 0;
 				
-				// do not specify bytesTotal when recording is complete, as the buffer is now fixed.
-				dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_COMPLETE, recordingBuffer));
+				dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_COMPLETE, sampleBufferModel, 0,
+						sampleBufferModel.totalSamples));
 				
-				recordingBuffer = null;
+				sampleBufferModel = null;
+				samplesRemaining = 0;
 			}
 		}
 		
@@ -78,6 +87,8 @@ package com.stuartkeith.soundcloud.recorder.service
 			{
 				var activityLevel:Number = microphone.activityLevel;
 				
+				// if the user has blocked the microphone, activityLevel
+				// will be -1.
 				if (activityLevel != -1)
 					// activityLevel is 0 to 100: we want 0 to 1.
 					return activityLevel / 100;
@@ -92,31 +103,30 @@ package com.stuartkeith.soundcloud.recorder.service
 		
 		protected function SAMPLE_DATA_listener(event:SampleDataEvent):void 
 		{
-			if (recordingBuffer)
+			if (sampleBufferModel)
 			{
-				// copy the incoming data into the recordingBuffer.
-				recordingBuffer.writeBytes(event.data);
+				// store event.data in a local variable for faster access.
+				var sampleData:ByteArray = event.data;
+				var samplesAvailable:int = sampleData.bytesAvailable / 4;
+				// don't use all of the samples available if that means the
+				// sound would be longer than the limit.
+				var samplesToRead:int = samplesRemaining < samplesAvailable ? samplesRemaining : samplesAvailable;
 				
-				// clamp the length of the recording to the maximum.
-				// need to do this before the event is dispatched, or
-				// the reported samplesTotal might be incorrect.
-				if (recordingBuffer.length > recordingBufferMaxBytes)
-					recordingBuffer.length = recordingBufferMaxBytes;
-				
-				// is it time to automatically stop the recording?
-				if (recordingBuffer.length == recordingBufferMaxBytes)
+				for (var i:int = 0; i < samplesToRead; i++)
 				{
-					// clamp the length of the recording to the maximum.
-					recordingBuffer.length = recordingBufferMaxBytes;
-					
-					// and stop the recording.
+					// store the sample and create another sample for the next one.
+					currentSampleVO.sample = sampleData.readFloat();
+					currentSampleVO = currentSampleVO.nextSampleVO = new SampleVO();
+				}
+				
+				samplesRemaining -= samplesToRead;
+				sampleBufferModel.totalSamples += samplesToRead;
+				
+				if (samplesRemaining == 0)
 					stopRecording();
-				}
 				else
-				{
-					dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_PROGRESS, recordingBuffer,
-							recordingBufferMaxBytes));
-				}
+					dispatch(new SoundProgressEvent(SoundProgressEvent.RECORD_PROGRESS, sampleBufferModel,
+							sampleBufferModel.totalSamples, recordingBufferMaxSamples));
 			}
 		}
 	}

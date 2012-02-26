@@ -11,7 +11,7 @@ package com.stuartkeith.soundcloud.recorder.command
 		
 		override public function execute():void 
 		{
-			soundOutputService.startPlaying(recordingModel.recordingBuffer);
+			soundOutputService.startPlaying(recordingModel.recordedSampleBufferModel);
 		}
 	}
 }

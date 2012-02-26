@@ -1,6 +1,8 @@
 package com.stuartkeith.soundcloud.recorder.service 
 {
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.SoundProgressEvent;
+	import com.stuartkeith.soundcloud.recorder.model.SampleBufferModel;
+	import com.stuartkeith.soundcloud.recorder.vo.SampleVO;
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
 	import flash.utils.ByteArray;
@@ -8,16 +10,19 @@ package com.stuartkeith.soundcloud.recorder.service
 	
 	public class SoundOutputService extends Actor 
 	{
-		// the maximum number of bytes to output each update.
-		// bytes = number of samples * 4 bytes per sample.
-		protected static const MAX_OUTPUT_BYTES:uint = 2048 * 4;
+		// the maximum number of samples to output each update.
+		// the Flash player requires it to be >= 2048.
+		protected static const MAX_OUTPUT_SAMPLES:uint = 2048;
 		
 		// the sound instance used to output sound.
 		protected var outputSound:Sound;
 		
 		// the current recording being played back.
 		// may be null if no recording is being played.
-		protected var currentRecordingBuffer:ByteArray;
+		protected var sampleBufferModel:SampleBufferModel;
+		protected var currentSampleVO:SampleVO;
+		protected var samplesWritten:int;
+		protected var samplesRemaining:int;
 		
 		public function SoundOutputService() 
 		{
@@ -26,65 +31,75 @@ package com.stuartkeith.soundcloud.recorder.service
 			outputSound.addEventListener(SampleDataEvent.SAMPLE_DATA, SAMPLE_DATA_listener);
 		}
 		
-		public function startPlaying(recordingBuffer:ByteArray):void
+		public function startPlaying($sampleBufferModel:SampleBufferModel):void
 		{
 			// if a recording is already playing, stop it.
-			if (currentRecordingBuffer)
-				stopPlaying();
+			stopPlaying();
 			
-			if (recordingBuffer)
+			if ($sampleBufferModel)
 			{
-				currentRecordingBuffer = recordingBuffer;
+				// create a new buffer.
+				sampleBufferModel = $sampleBufferModel;
+				currentSampleVO = sampleBufferModel.sampleVOHead;
+				samplesWritten = 0;
+				samplesRemaining = sampleBufferModel.totalSamples;
 				
-				recordingBuffer.position = 0;
+				dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_START, sampleBufferModel,
+						samplesWritten, sampleBufferModel.totalSamples));
 				
-				dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_START, currentRecordingBuffer));
-				
+				// start streaming the sound.
 				outputSound.play();
 			}
 		}
 		
 		public function stopPlaying():void
 		{
-			currentRecordingBuffer.position = 0;
-			
-			dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_COMPLETE, currentRecordingBuffer));
-			
-			currentRecordingBuffer = null;
+			if (sampleBufferModel)
+			{
+				dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_COMPLETE, sampleBufferModel,
+							samplesWritten, sampleBufferModel.totalSamples));
+				
+				sampleBufferModel = null;
+				currentSampleVO = null;
+				samplesWritten = 0;
+				samplesRemaining = 0;
+			}
 		}
 		
 		protected function SAMPLE_DATA_listener(event:SampleDataEvent):void 
 		{
-			if (currentRecordingBuffer)
+			if (sampleBufferModel)
 			{
 				// store event.data in a local variable for faster access.
 				var outputBuffer:ByteArray = event.data;
-				// store currentBuffer.bytesAvailable in a local variable for faster access.
-				var bytesAvailable:uint = currentRecordingBuffer.bytesAvailable;
-				// process as many bytes as possible from the recording: capped at MAX_OUTPUT_BYTES.
-				var bytesToProcess:uint = bytesAvailable < MAX_OUTPUT_BYTES ? bytesAvailable : MAX_OUTPUT_BYTES;
-				// each float/Number is four bytes in size.
-				var floatsToProcess:uint = bytesToProcess / 4;
 				
-				var currentFloat:Number;
+				var currentSample:Number;
 				
-				// read the desired number of floats from currentRecordingBuffer.
-				for (var i:uint = 0; i < floatsToProcess; i++)
+				// we will output either the rest of the samples or
+				// MAX_OUTPUT_SAMPLES samples, whichever is lower.
+				var samplesToRead:int = samplesRemaining < MAX_OUTPUT_SAMPLES ? samplesRemaining : MAX_OUTPUT_SAMPLES;
+				
+				for (var i:uint = 0; i < samplesToRead; i++)
 				{
-					currentFloat = currentRecordingBuffer.readFloat();
+					currentSample = currentSampleVO.sample;
 					
-					// the currentRecordingBuffer is mono, the outputBuffer
-					// needs to be stereo... so output each float twice.
-					outputBuffer.writeFloat(currentFloat);
-					outputBuffer.writeFloat(currentFloat);
+					// the input is mono, the output is stereo...
+					// so output each sample twice.
+					outputBuffer.writeFloat(currentSample);
+					outputBuffer.writeFloat(currentSample);
+					
+					// go to the next sampleVO in the linked list.
+					currentSampleVO = currentSampleVO.nextSampleVO;
 				}
 				
-				// if there weren't enough bytes to fill the output buffer,
-				// we've run out of bytes. stop the playback.
-				if (bytesToProcess != MAX_OUTPUT_BYTES)
+				samplesRemaining -= samplesToRead;
+				samplesWritten += samplesToRead;
+				
+				if (samplesRemaining == 0)
 					stopPlaying();
 				else
-					dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_PROGRESS, currentRecordingBuffer));
+					dispatch(new SoundProgressEvent(SoundProgressEvent.PLAYBACK_PROGRESS, sampleBufferModel,
+						samplesWritten, sampleBufferModel.totalSamples));
 			}
 		}
 	}
