@@ -4,19 +4,18 @@ package com.stuartkeith.soundcloud.recorder.view
 	import com.bit101.components.PushButton;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
+	import com.stuartkeith.soundcloud.recorder.vo.SoundVO;
 	import flash.events.MouseEvent;
 	
 	public class UploadedSoundView extends Window 
 	{
-		protected var soundTitle:String;
-		protected var soundPermalinkURL:String;
+		protected var soundVO:SoundVO;
 		
-		public function UploadedSoundView($soundTitle:String, $soundPermalinkURL:String) 
+		public function UploadedSoundView($soundVO:SoundVO) 
 		{
 			super();
 			
-			soundTitle = $soundTitle;
-			soundPermalinkURL = $soundPermalinkURL;
+			soundVO = $soundVO;
 			
 			// set up the window.
 			
@@ -36,11 +35,11 @@ package com.stuartkeith.soundcloud.recorder.view
 			// create components
 			
 			var soundTitleLabel:Label = new Label();
-			soundTitleLabel.text = "'" + soundTitle + "' was successfully uploaded.";
+			soundTitleLabel.text = "'" + soundVO.title + "' was successfully uploaded.";
 			
 			var soundPermalinkURLButton:PushButton = new PushButton();
 			soundPermalinkURLButton.width = width - (vBox.spacing * 2);
-			soundPermalinkURLButton.label = "View '" + soundTitle + "' on SoundCloud";
+			soundPermalinkURLButton.label = "View '" + soundVO.title + "' on SoundCloud";
 			soundPermalinkURLButton.addEventListener(MouseEvent.CLICK, soundPermalinkURLButton_CLICK_listener);
 			
 			var recordAnotherSoundButton:PushButton = new PushButton();
@@ -59,14 +58,12 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		protected function soundPermalinkURLButton_CLICK_listener(event:MouseEvent):void 
 		{
-			dispatchEvent(new UploadedSoundViewEvent(UploadedSoundViewEvent.NAVIGATE_TO_PERMALINK, soundTitle,
-					soundPermalinkURL));
+			dispatchEvent(new UploadedSoundViewEvent(UploadedSoundViewEvent.NAVIGATE_TO_PERMALINK, soundVO));
 		}
 		
 		protected function recordAnotherSoundButton_CLICK_listener(event:MouseEvent):void 
 		{
-			dispatchEvent(new UploadedSoundViewEvent(UploadedSoundViewEvent.RECORD_ANOTHER_SOUND, soundTitle,
-					soundPermalinkURL));
+			dispatchEvent(new UploadedSoundViewEvent(UploadedSoundViewEvent.RECORD_ANOTHER_SOUND, soundVO));
 		}
 	}
 }

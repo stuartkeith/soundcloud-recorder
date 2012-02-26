@@ -1,5 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.view 
 {
+	import com.stuartkeith.soundcloud.recorder.vo.SoundVO;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
@@ -73,14 +74,14 @@ package com.stuartkeith.soundcloud.recorder.view
 			changeChildView(new UploadSoundView());
 		}
 		
-		public function showUploadingSoundView():void
+		public function showUploadingSoundView(soundVO:SoundVO):void
 		{
-			changeChildView(new SpinnerView("Uploading Sound to SoundCloud..."));
+			changeChildView(new SpinnerView("Uploading '" + soundVO.title + "' to SoundCloud..."));
 		}
 		
-		public function showUploadedSoundView(title:String, permalinkURL:String):void
+		public function showUploadedSoundView(soundVO:SoundVO):void
 		{
-			changeChildView(new UploadedSoundView(title, permalinkURL));
+			changeChildView(new UploadedSoundView(soundVO));
 		}
 	}
 }

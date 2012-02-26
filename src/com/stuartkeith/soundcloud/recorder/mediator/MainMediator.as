@@ -51,15 +51,12 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		
 		protected function UPLOADING_listener(event:UploadEvent):void 
 		{
-			mainView.showUploadingSoundView();
+			mainView.showUploadingSoundView(event.soundVO);
 		}
 		
 		protected function UPLOADED_listener(event:UploadEvent):void 
 		{
-			var title:String = event.response["title"];
-			var permalinkURL:String = event.response["permalink-url"];
-			
-			mainView.showUploadedSoundView(title, permalinkURL);
+			mainView.showUploadedSoundView(event.soundVO);
 		}
 	}
 }

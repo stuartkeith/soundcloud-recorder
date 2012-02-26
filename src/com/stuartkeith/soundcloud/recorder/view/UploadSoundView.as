@@ -7,7 +7,8 @@ package com.stuartkeith.soundcloud.recorder.view
 	import com.bit101.components.PushButton;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
-	import com.stuartkeith.soundcloud.recorder.frameworkEvent.UploadRequestEvent;
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.UploadEvent;
+	import com.stuartkeith.soundcloud.recorder.vo.SoundVO;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -85,8 +86,13 @@ package com.stuartkeith.soundcloud.recorder.view
 		
 		protected function uploadButton_CLICK_listener(event:MouseEvent):void 
 		{
-			dispatchEvent(new UploadRequestEvent(UploadRequestEvent.UPLOAD_REQUEST, soundTitleInputText.text,
-					soundIsPublicCheckBox.selected, soundTagsInputText.text));
+			var soundVO:SoundVO = new SoundVO();
+			
+			soundVO.title = soundTitleInputText.text;
+			soundVO.isPublic = soundIsPublicCheckBox.selected;
+			soundVO.tags = soundTagsInputText.text;
+			
+			dispatchEvent(new UploadEvent(UploadEvent.REQUEST_UPLOAD, soundVO));
 		}
 	}
 }

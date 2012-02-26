@@ -1,5 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.view 
 {
+	import com.stuartkeith.soundcloud.recorder.vo.SoundVO;
 	import flash.events.Event;
 	
 	public class UploadedSoundViewEvent extends Event 
@@ -7,26 +8,24 @@ package com.stuartkeith.soundcloud.recorder.view
 		public static const NAVIGATE_TO_PERMALINK:String = "navigateToPermalink";
 		public static const RECORD_ANOTHER_SOUND:String = "recordAnotherSound";
 		
-		protected var _soundTitle:String;
-		protected var _soundPermalinkURL:String;
+		protected var _soundVO:SoundVO;
 		
-		public function UploadedSoundViewEvent(type:String, $soundTitle:String, $soundPermalinkURL:String,
-				bubbles:Boolean=false, cancelable:Boolean=false) 
+		public function UploadedSoundViewEvent(type:String, $soundVO:SoundVO, bubbles:Boolean = false,
+				cancelable:Boolean=false) 
 		{
 			super(type, bubbles, cancelable);
 			
-			_soundTitle = $soundTitle;
-			_soundPermalinkURL = $soundPermalinkURL;
+			_soundVO = $soundVO;
 		}
 		
-		public function get soundTitle():String 
+		override public function clone():flash.events.Event 
 		{
-			return _soundTitle;
+			return new UploadedSoundViewEvent(type, _soundVO, bubbles, cancelable);
 		}
 		
-		public function get soundPermalinkURL():String 
+		public function get soundVO():SoundVO 
 		{
-			return _soundPermalinkURL;
+			return _soundVO;
 		}
 	}
 }

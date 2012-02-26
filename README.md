@@ -56,9 +56,10 @@ Possible Improvements
 - Check source comments.
 - Check model/VO names.
 - WAVE file should not be built every time, only when recording changes.
-- Merge UploadEvent and UploadRequestEvent.
 - Are relevant errors being listened to/acted upon?
 - Add event metadata.
 - Invalid query strings cause the application to throw an unhandled error.
 - Event listeners in views are not removed when view is removed.
 - Does not take appropriate action if a microphone is absent/not supported.
+- Could have a separate parser class that parses the XML, so JSON parsing could
+  easily be added later.

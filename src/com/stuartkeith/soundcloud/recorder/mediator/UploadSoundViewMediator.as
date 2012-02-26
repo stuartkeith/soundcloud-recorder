@@ -1,6 +1,6 @@
 package com.stuartkeith.soundcloud.recorder.mediator 
 {
-	import com.stuartkeith.soundcloud.recorder.frameworkEvent.UploadRequestEvent;
+	import com.stuartkeith.soundcloud.recorder.frameworkEvent.UploadEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	public class UploadSoundViewMediator extends Mediator 
@@ -8,7 +8,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		override public function onRegister():void 
 		{
 			// pass the event on
-			addViewListener(UploadRequestEvent.UPLOAD_REQUEST, dispatch, UploadRequestEvent);
+			addViewListener(UploadEvent.REQUEST_UPLOAD, dispatch, UploadEvent);
 		}
 	}
 }

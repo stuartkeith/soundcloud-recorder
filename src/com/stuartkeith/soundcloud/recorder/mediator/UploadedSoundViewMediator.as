@@ -18,7 +18,7 @@ package com.stuartkeith.soundcloud.recorder.mediator
 		
 		protected function NAVIGATE_TO_PERMALINK_listener(event:UploadedSoundViewEvent):void 
 		{
-			dispatch(new NavigateToURLEvent(NavigateToURLEvent.NAVIGATE_TO_URL, event.soundPermalinkURL, "_blank"));
+			dispatch(new NavigateToURLEvent(NavigateToURLEvent.NAVIGATE_TO_URL, event.soundVO.permalinkURL, "_blank"));
 		}
 		
 		protected function RECORD_ANOTHER_SOUND_listener(event:UploadedSoundViewEvent):void 

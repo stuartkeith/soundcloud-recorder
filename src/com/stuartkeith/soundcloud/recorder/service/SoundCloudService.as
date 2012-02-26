@@ -1,6 +1,7 @@
 package com.stuartkeith.soundcloud.recorder.service 
 {
 	import com.stuartkeith.soundcloud.recorder.frameworkEvent.UploadEvent;
+	import com.stuartkeith.soundcloud.recorder.vo.SoundVO;
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
@@ -13,7 +14,9 @@ package com.stuartkeith.soundcloud.recorder.service
 	public class SoundCloudService extends Actor 
 	{
 		protected var multipartURLLoader:MultipartURLLoader;
-		protected var isLoading:Boolean;
+		// the sound currently being uploaded. null if uploading
+		// not taking place.
+		protected var soundVO:SoundVO;
 		
 		public function SoundCloudService() 
 		{
@@ -28,21 +31,20 @@ package com.stuartkeith.soundcloud.recorder.service
 			multipartURLLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError, false, 0, false);
 		}
 		
-		public function uploadSound(waveBuffer:ByteArray, accessToken:String, title:String, sharing:String,
-				tags:String=null):void
+		public function uploadSound(waveBuffer:ByteArray, accessToken:String, $soundVO:SoundVO):void
 		{
-			if (!isLoading)
+			if (!soundVO)
 			{
-				isLoading = true;
+				soundVO = $soundVO;
 				
 				// add access token and track options.
 				// track[title] is mandatory.
 				multipartURLLoader.addVariable("oauth_token", accessToken);
-				multipartURLLoader.addVariable("track[title]", title);
-				multipartURLLoader.addVariable("track[sharing]", sharing);
+				multipartURLLoader.addVariable("track[title]", soundVO.title);
+				multipartURLLoader.addVariable("track[sharing]", soundVO.sharing);
 				
-				if (tags)
-					multipartURLLoader.addVariable("track[tag_list]", tags);
+				if (soundVO.tags)
+					multipartURLLoader.addVariable("track[tag_list]", soundVO.tags);
 				
 				// add the file with a dummy filename.
 				multipartURLLoader.addFile(waveBuffer, "filename.wav",  "track[asset_data]", "audio/wav");
@@ -53,10 +55,10 @@ package com.stuartkeith.soundcloud.recorder.service
 				}
 				catch (error:Error)
 				{
-					dispatch(new UploadEvent(UploadEvent.UPLOAD_ERROR));
+					dispatch(new UploadEvent(UploadEvent.UPLOAD_ERROR, soundVO));
 				}
 				
-				dispatch(new UploadEvent(UploadEvent.UPLOADING));
+				dispatch(new UploadEvent(UploadEvent.UPLOADING, soundVO));
 			}
 		}
 		
@@ -65,14 +67,14 @@ package com.stuartkeith.soundcloud.recorder.service
 			multipartURLLoader.clearFiles();
 			multipartURLLoader.clearVariables();
 			
-			isLoading = false;
+			soundVO = null;
 		}
 		
 		protected function onSecurityError(event:SecurityErrorEvent):void 
 		{
-			cleanUp();
+			dispatch(new UploadEvent(UploadEvent.UPLOAD_ERROR, soundVO));
 			
-			dispatch(new UploadEvent(UploadEvent.UPLOAD_ERROR));
+			cleanUp();
 		}
 		
 		protected function onHTTPStatus(event:HTTPStatusEvent):void 
@@ -82,9 +84,9 @@ package com.stuartkeith.soundcloud.recorder.service
 		
 		protected function onIOError(event:IOErrorEvent):void 
 		{
-			cleanUp();
+			dispatch(new UploadEvent(UploadEvent.UPLOAD_ERROR, soundVO));
 			
-			dispatch(new UploadEvent(UploadEvent.UPLOAD_ERROR));
+			cleanUp();
 		}
 		
 		protected function onProgress(event:ProgressEvent):void 
@@ -94,11 +96,16 @@ package com.stuartkeith.soundcloud.recorder.service
 		
 		protected function onComplete(event:Event):void 
 		{
-			cleanUp();
-			
 			var response:XML = new XML(multipartURLLoader.data);
 			
-			dispatch(new UploadEvent(UploadEvent.UPLOADED, response));
+			soundVO.permalinkURL = response["permalink-url"];
+			soundVO.sharing = response["sharing"];
+			soundVO.tags = response["tag-list"];
+			soundVO.title = response["title"];
+			
+			dispatch(new UploadEvent(UploadEvent.UPLOADED, soundVO));
+			
+			cleanUp();
 		}
 	}
 }

@@ -49,7 +49,7 @@ package com.stuartkeith.soundcloud.recorder
 			commandMap.mapEvent(FrameworkEvent.STOP_RECORDING, StopRecordingCommand);
 			commandMap.mapEvent(SoundProgressEvent.RECORD_COMPLETE, StoreRecordingCommand);
 			commandMap.mapEvent(NavigateToURLEvent.NAVIGATE_TO_URL, NavigateToURLCommand);
-			commandMap.mapEvent(UploadRequestEvent.UPLOAD_REQUEST, UploadSoundCommand);
+			commandMap.mapEvent(UploadEvent.REQUEST_UPLOAD, UploadSoundCommand);
 			
 			// call super (this will dispatch STARTUP_COMPLETE).
 			super.startup();
