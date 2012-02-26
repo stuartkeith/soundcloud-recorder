@@ -51,8 +51,8 @@ package com.stuartkeith.soundcloud.recorder.view
 		// components used by this view
 		protected var microphoneActivityView:MicrophoneActivityView;
 		protected var timeView:TimeView;
-		protected var recordButton:PushButton;
-		protected var playButton:PushButton;
+		protected var recordButton:RecordButton;
+		protected var playButton:PlayButton;
 		protected var uploadButton:PushButton;
 		
 		public function RecordView() 
@@ -92,12 +92,10 @@ package com.stuartkeith.soundcloud.recorder.view
 			timeView.width = 384;
 			timeView.height = 32;
 			
-			recordButton = new PushButton();
-			recordButton.toggle = true;
+			recordButton = new RecordButton();
 			recordButton.addEventListener(MouseEvent.CLICK, onRecordButtonClicked);
 			
-			playButton = new PushButton();
-			playButton.toggle = true;
+			playButton = new PlayButton();
 			playButton.addEventListener(MouseEvent.CLICK, onPlayButtonClicked);
 			
 			uploadButton = new PushButton();
@@ -146,13 +144,11 @@ package com.stuartkeith.soundcloud.recorder.view
 			
 			// set the record button's properties for the current state
 			recordButton.enabled = currentState != STATE_PLAYING;
-			recordButton.selected = currentState == STATE_RECORDING;
-			recordButton.label = recordButton.selected ? "Stop" : "Record";
+			recordButton.isToggled = currentState == STATE_RECORDING;
 			
 			// set the play button's properties for the current state
 			playButton.enabled = currentState == STATE_RECORDED || currentState == STATE_PLAYING;
-			playButton.selected = currentState == STATE_PLAYING;
-			playButton.label = playButton.selected ? "Stop" : "Play";
+			playButton.isToggled = currentState == STATE_PLAYING;
 			
 			uploadButton.enabled = currentState == STATE_RECORDED;
 			
