@@ -32,7 +32,7 @@ SoundCloud Recorder uses the following third-party libraries:
 - MinimalComps (https://github.com/minimalcomps/minimalcomps)
 - MultipartURLLoader (https://github.com/markpasc/MultipartURLLoader)
 - Robotlegs (https://github.com/robotlegs/robotlegs-framework)
-- SWFObject (https://github.com/swfobject/swfobject)
+- swfobject (https://github.com/swfobject/swfobject)
 
 
 Assets
