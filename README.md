@@ -80,14 +80,6 @@ Possible Improvements/Outstanding Issues
 
 - Look at MP3 encoding library for ActionScript to shorten upload times.
 
-- The authorisation process could be improved substantially - when the callback
-  URL is called, JavaScript could be used to parse the access token and expiry
-  time (converting it into a Date object), store that data in LocalStorage via
-  toJSON(), then refresh the page without the query params (to avoid the user
-  bookmarking the page with the query params in it). The Date object could then
-  be checked when the user returns to the page, with a prompt to re-authorise
-  if the token is due to expire soon.
-
 - Visual appearance of the app could be improved.
 
 - MinimalComponents could be replaced with Flex. MinimalComps does not seem to

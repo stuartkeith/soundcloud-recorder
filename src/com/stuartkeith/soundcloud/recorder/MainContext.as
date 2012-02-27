@@ -41,7 +41,7 @@ package com.stuartkeith.soundcloud.recorder
 			mediatorMap.mapView(UploadedSoundView, UploadedSoundViewMediator);
 			
 			// map framework events to commands
-			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessQueryStringCommand);
+			commandMap.mapEvent(FrameworkEvent.APPLICATION_READY, ProcessSoundCloudConfigurationVOCommand);
 			commandMap.mapEvent(FrameworkEvent.BEGIN_PLAYING, BeginPlayingCommand);
 			commandMap.mapEvent(FrameworkEvent.BEGIN_RECORDING, BeginRecordingCommand);
 			commandMap.mapEvent(FrameworkEvent.CONNECT_TO_SOUNDCLOUD, NavigateToSoundCloudAuthorisationURLCommand);

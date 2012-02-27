@@ -49,14 +49,9 @@ package com.stuartkeith.soundcloud.recorder.view
 			}
 		}
 		
-		public function showAuthorisationError(error:String, errorDescription:String):void
+		public function showAuthorisationView(errorDescription:String):void
 		{
-			changeChildView(new AuthorisationErrorView(errorDescription));
-		}
-		
-		public function showAuthorisationView():void
-		{
-			changeChildView(new AuthorisationView());
+			changeChildView(new AuthorisationView(errorDescription));
 		}
 		
 		public function showConnectingToSoundCloudView():void

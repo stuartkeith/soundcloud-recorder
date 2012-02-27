@@ -10,13 +10,13 @@ package com.stuartkeith.soundcloud.recorder.view
 		protected var text:Text;
 		protected var connectButton:ConnectButton;
 		
-		public function AuthorisationView()
+		public function AuthorisationView($errorDescription:String) 
 		{
 			super();
 			
 			// set up the window:
 			
-			title = getTitleString();
+			title = "SoundCloud Authorisation";
 			width = 320;
 			height = 164;
 			draggable = false;
@@ -27,7 +27,7 @@ package com.stuartkeith.soundcloud.recorder.view
 			vBox.alignment = VBox.CENTER;
 			vBox.spacing = 8;
 			
-			text = new Text(vBox, 0, 0, getLabelString());
+			text = new Text(vBox, 0, 0, $errorDescription);
 			connectButton = new ConnectButton();
 			
 			text.editable = false;
@@ -37,17 +37,6 @@ package com.stuartkeith.soundcloud.recorder.view
 			vBox.addChild(text);
 			
 			vBox.addChild(connectButton);
-		}
-		
-		protected function getTitleString():String
-		{
-			return "SoundCloud Authorisation Required";
-		}
-		
-		protected function getLabelString():String
-		{
-			return "Before you begin recording, please authorise this application " +
-					"with SoundCloud so you can upload your sounds to your SoundCloud account.";
 		}
 	}
 }

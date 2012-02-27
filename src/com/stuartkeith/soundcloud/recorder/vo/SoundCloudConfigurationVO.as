@@ -8,6 +8,8 @@ package com.stuartkeith.soundcloud.recorder.vo
 		public var authorisationURL:String;
 		// the app's client ID.
 		public var clientID:String;
+		// the error (if any) that occurred during the authorisation.
+		public var lastError:String;
 		// the maximimum length of a recorded sound.
 		public var maxRecordingTimeSeconds:int;
 		// SoundCloud redirects back to this URI post-authorisation.
@@ -17,7 +19,9 @@ package com.stuartkeith.soundcloud.recorder.vo
 		
 		public function SoundCloudConfigurationVO(parameters:Object)
 		{
+			accessToken = parameters.accessToken;
 			clientID = parameters.soundCloudClientID;
+			lastError = parameters.lastError;
 			maxRecordingTimeSeconds = parameters.maxRecordingTimeSeconds || 60;
 			redirectURI = parameters.soundCloudRedirectURI;
 			trackURL = parameters.soundCloudTrackURL;

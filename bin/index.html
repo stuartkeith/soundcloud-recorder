@@ -23,70 +23,182 @@
 		<a href="http://soundcloud.com/mobile/">mobile apps</a>.</p>
 	</script>
 	<script>
-		swfobject.addDomLoadEvent(function () {
-			var altContent = document.getElementById("altContent");
+		// converts query string to object (from window.location.hash, etc)
+		// so queryStringToObject("?blah=hello&another=1234") == { blah: "hello", another: 1234 }
+		// returns null if queryString is a falsey value.
+		var queryStringToObject = function (queryString) {
+			if (!queryString)
+				return null;
 			
-			// if altContent does not exist, the Flash has been inserted successfully.
-			if (!altContent)
-				return;
+			var result = {};
 			
-			// check if the browser is an iDevice, Android, or other mobile device, and if so,
-			// change the alternative content to show relevant information to the user.
+			// cut off the # or ? and split the key and value pairs into an array.
+			var queryStringPairs = queryString.substr(1).split("&");
+			var currentPair;
 			
-			// iDevice
-			if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
-				altContent.innerHTML = document.getElementById("iDeviceContent").innerHTML;
-			// Android
-			} else if (navigator.userAgent.match(/Android/)) {
-				altContent.innerHTML = document.getElementById("androidContent").innerHTML;
-			// Other mobile
-			} else if (navigator.userAgent.match(/mobile/i)) {
-				altContent.innerHTML = document.getElementById("mobileContent").innerHTML;
+			for (var i = 0; i < queryStringPairs.length; i++) {
+				// split the key and value into an array.
+				currentPair = queryStringPairs[i].split("=");
+				
+				// store the array into the object.
+				result[currentPair[0]] = escape(currentPair[1]);
 			}
-		});
+			
+			return result;
+		};
 		
-		var getQueryString = function () {
-			if (window.location.search) {
-				// we don't need the "?" character.
-				return window.location.search.substr(1);
-			} else if (window.location.hash) {
-				// we don't need the "#" character.
-				return window.location.hash.substr(1);
+		// add authorisation variables to flashVars object.
+		var appendAuthorisationFlashVars = function (flashVars) {
+			// get existing values from localStorage.
+			var lastError = localStorage.getItem("lastError");
+			var accessToken = localStorage.getItem("accessToken");
+			var expiryDate = localStorage.getItem("expiryDate");
+			var expiryDateObject;
+			
+			// convert the date string into a Date object.
+			if (expiryDate)
+				expiryDateObject = new Date(expiryDate);
+			
+			// if there's an error, pass a description of it to the flashVars object.
+			if (lastError) {
+				flashVars.lastError = "The SoundCloud authorisation process returned an error.\n\n" +
+						"SoundCloud said, '" + lastError + "'.\n\n" +
+						"Try again?";
+			// if the user hasn't authorised yet, prompt them to do so.
+			} else if (!accessToken || !expiryDate) {
+				flashVars.lastError = "Before you can start recording, you need to authorise this app with SoundCloud.\n\n" +
+						"This is so the recorded sound can be uploaded to your SoundCloud account.";
+			// if the authorisation has expired, prompt them to re-authorise.
+			} else if (new Date() >= expiryDateObject) {
+				flashVars.lastError = "You previously authorised this app, but the authorisation has expired.\n\n" +
+						"Please re-authorise the app."
+			// otherwise pass the accessToken to the SWF.
+			} else {
+				flashVars.accessToken = accessToken;
 			}
 		};
 		
-		var flashvars = {
-			// the maximimum length of a recorded sound.
-			maxRecordingTimeSeconds: 180,
-			soundCloudClientID: "b6812c7c576cc7613712d5d0a20e220f",
-			// always redirect back to this URI.
-			soundCloudRedirectURI: window.location.protocol + "//" + window.location.hostname + window.location.pathname,
-			// SoundCloud's authorisation URL as a template.
-			// must be escaped - otherwise special characters can be cut off when read by Flash.
-			// must contain $CLIENT_ID$ and $REDIRECT_URI$ to be parsed properly.
-			soundCloudAuthorisationURLTemplate: escape("https://soundcloud.com/connect?client_id=$CLIENT_ID$&response_type=token&redirect_uri=$REDIRECT_URI$"),
-			// the URL to which the app should upload recorded sounds.
-			soundCloudTrackURL: "https://api.soundcloud.com/tracks.xml"
-		};
+		/*
+		 * localStorage + authentication:
+		 *
+		 * uses:
+		 * localStorage.lastError
+		 * localStorage.accessToken
+		 * localStorage.expiryDate
+		 *
+		 * Handles these three scenarios:
+		 *
+		 * - The page is requested with a querystring containing error information.
+		 *   - set localStorage.lastError = error.
+		 *   - refresh the page (without querystring).
+		 *
+		 * - The page is requested with a querystring containing an access token and
+		 *   expiry time in seconds.
+		 *   - unset localStorage.lastError.
+		 *   - set localStorage.accessToken = access_token.
+		 *   - set localStorage.expiryDate = (calculate from current date and time).
+		 *   - refresh the page (without querystring).
+		 *
+		 * - The page is requested with no querystring.
+		 *   - check localStorage for lastError.
+		 *     - set flashvars.lastError = localStorage.lastError.
+		 *   - else check localStorage for pre-existing access token and token expiry date.
+		 *     - if access token is undefined or token expiry date is undefined:
+		 *       - set flashvars.lastError = "needs authentication".
+		 *     - if the token has expired:
+		 *       - set flashvars.lastError = "the token has expired".
+		 *     - if the access token is valid:
+		 *       - set flashvars.accessToken = access_token.
+		 *   - insert SWF into page.
+		 *
+		 */
 		
-		var params = {
-			menu: "false",
-			scale: "noScale",
-			allowFullscreen: "true",
-			allowScriptAccess: "always",
-			bgcolor: "",
-			wmode: "direct" // can cause issues with FP settings & webcam
-		};
+		var queryStringObject = queryStringToObject(window.location.hash) || queryStringToObject(window.location.search);
 		
-		var attributes = {
-			id:"soundcloudrecorder"
-		};
-		
-		swfobject.embedSWF(
-			"soundcloudrecorder.swf", 
-			"altContent", "100%", "100%", "10.0.0", 
-			"expressInstall.swf", 
-			flashvars, params, attributes);
+		if (queryStringObject) {
+			// if there's an error, store it and remove any set accessToken and expiryDate.
+			if (queryStringObject.error_description) {
+				localStorage.setItem("lastError", queryStringObject.error_description);
+				localStorage.removeItem("accessToken");
+				localStorage.removeItem("expiryDate");
+			} else if (queryStringObject.access_token) {
+				// get the current date.
+				var currentDate = new Date();
+				// convert from seconds to minutes by dividing by 60.
+				var expiresInMinutes = Math.floor(queryStringObject.expires_in / 60);
+				// add the expiry time to the current date. subtract an hour to reduce
+				// the likelihood the user's token will expire while they're using the app.
+				// (this could be handled better!)
+				currentDate.setMinutes(currentDate.getMinutes() + expiresInMinutes - 60);
+				
+				localStorage.removeItem("lastError");
+				localStorage.setItem("accessToken", queryStringObject.access_token);
+				localStorage.setItem("expiryDate", currentDate);
+			}
+			
+			// refresh the page without any query string.
+			window.location = window.location.pathname;
+		} else {
+			// replace the alternative content on certain devices.
+			swfobject.addDomLoadEvent(function () {
+				var altContent = document.getElementById("altContent");
+				
+				// if altContent does not exist, the Flash has been inserted successfully.
+				if (!altContent)
+					return;
+				
+				// check if the browser is an iDevice, Android, or other mobile device, and if so,
+				// change the alternative content to show relevant information to the user.
+				
+				// iDevice
+				if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
+					altContent.innerHTML = document.getElementById("iDeviceContent").innerHTML;
+				// Android
+				} else if (navigator.userAgent.match(/Android/)) {
+					altContent.innerHTML = document.getElementById("androidContent").innerHTML;
+				// Other mobile
+				} else if (navigator.userAgent.match(/mobile/i)) {
+					altContent.innerHTML = document.getElementById("mobileContent").innerHTML;
+				}
+			});
+			
+			var flashVars = {
+				// the maximimum length of a recorded sound.
+				maxRecordingTimeSeconds: 180,
+				soundCloudClientID: "b6812c7c576cc7613712d5d0a20e220f",
+				// always redirect back to this URI.
+				soundCloudRedirectURI: window.location.protocol + "//" + window.location.hostname + window.location.pathname,
+				// SoundCloud's authorisation URL as a template.
+				// must be escaped - otherwise special characters can be cut off when read by Flash.
+				// must contain $CLIENT_ID$ and $REDIRECT_URI$ to be parsed properly.
+				soundCloudAuthorisationURLTemplate: escape("https://soundcloud.com/connect?client_id=$CLIENT_ID$&response_type=token&redirect_uri=$REDIRECT_URI$"),
+				// the URL to which the app should upload recorded sounds.
+				soundCloudTrackURL: "https://api.soundcloud.com/tracks.xml"
+			};
+			
+			// insert the authorisation variables into the flashVars object.
+			appendAuthorisationFlashVars(flashVars);
+			
+			var params = {
+				menu: "false",
+				scale: "noScale",
+				allowFullscreen: "true",
+				allowScriptAccess: "always",
+				bgcolor: "",
+				wmode: "direct" // can cause issues with FP settings & webcam
+			};
+			
+			var attributes = {
+				id:"soundcloudrecorder"
+			};
+			
+			// embed the SWF.
+			swfobject.embedSWF(
+				"soundcloudrecorder.swf", 
+				"altContent", "100%", "100%", "10.0.0", 
+				"expressInstall.swf", 
+				flashVars, params, attributes);
+		}
 	</script>
 	<style>
 		html, body { height:100%; overflow:hidden; }
