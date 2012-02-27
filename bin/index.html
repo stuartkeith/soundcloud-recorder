@@ -62,7 +62,7 @@
 			// if there's an error, pass a description of it to the flashVars object.
 			if (lastError) {
 				flashVars.lastError = "The SoundCloud authorisation process returned an error.\n\n" +
-						"SoundCloud said, '" + lastError + "'.\n\n" +
+						"SoundCloud said, '" + lastError + "'\n\n" +
 						"Try again?";
 			// if the user hasn't authorised yet, prompt them to do so.
 			} else if (!accessToken || !expiryDate) {
