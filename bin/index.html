@@ -29,24 +29,24 @@
 		var queryStringToObject = function (queryString) {
 			if (!queryString)
 				return null;
-			
+
 			var result = {};
-			
+
 			// cut off the # or ? and split the key and value pairs into an array.
 			var queryStringPairs = queryString.substr(1).split("&");
 			var currentPair;
-			
+
 			for (var i = 0; i < queryStringPairs.length; i++) {
 				// split the key and value into an array.
 				currentPair = queryStringPairs[i].split("=");
-				
+
 				// store the array into the object.
 				result[currentPair[0]] = escape(currentPair[1]);
 			}
-			
+
 			return result;
 		};
-		
+
 		// add authorisation variables to flashVars object.
 		var appendAuthorisationFlashVars = function (flashVars) {
 			// get existing values from localStorage.
@@ -54,11 +54,11 @@
 			var accessToken = localStorage.getItem("accessToken");
 			var expiryDate = localStorage.getItem("expiryDate");
 			var expiryDateObject;
-			
+
 			// convert the date string into a Date object.
 			if (expiryDate)
 				expiryDateObject = new Date(expiryDate);
-			
+
 			// if there's an error, pass a description of it to the flashVars object.
 			if (lastError) {
 				flashVars.lastError = "The SoundCloud authorisation process returned an error.\n\n" +
@@ -77,7 +77,7 @@
 				flashVars.accessToken = accessToken;
 			}
 		};
-		
+
 		/*
 		 * localStorage + authentication:
 		 *
@@ -112,9 +112,9 @@
 		 *   - insert SWF into page.
 		 *
 		 */
-		
+
 		var queryStringObject = queryStringToObject(window.location.hash) || queryStringToObject(window.location.search);
-		
+
 		if (queryStringObject) {
 			// if there's an error, store it and remove any set accessToken and expiryDate.
 			if (queryStringObject.error_description) {
@@ -130,26 +130,26 @@
 				// the likelihood the user's token will expire while they're using the app.
 				// (this could be handled better!)
 				currentDate.setMinutes(currentDate.getMinutes() + expiresInMinutes - 60);
-				
+
 				localStorage.removeItem("lastError");
 				localStorage.setItem("accessToken", queryStringObject.access_token);
 				localStorage.setItem("expiryDate", currentDate);
 			}
-			
+
 			// refresh the page without any query string.
 			window.location = window.location.pathname;
 		} else {
 			// replace the alternative content on certain devices.
 			swfobject.addDomLoadEvent(function () {
-				var altContent = document.getElementById("altContent");
-				
+				var altContent = document.getElementById("alt-content");
+
 				// if altContent does not exist, the Flash has been inserted successfully.
 				if (!altContent)
 					return;
-				
+
 				// check if the browser is an iDevice, Android, or other mobile device, and if so,
 				// change the alternative content to show relevant information to the user.
-				
+
 				// iDevice
 				if (navigator.userAgent.match(/(iPhone|iPod|iPad)/)) {
 					altContent.innerHTML = document.getElementById("iDeviceContent").innerHTML;
@@ -161,7 +161,7 @@
 					altContent.innerHTML = document.getElementById("mobileContent").innerHTML;
 				}
 			});
-			
+
 			var flashVars = {
 				// the maximimum length of a recorded sound.
 				maxRecordingTimeSeconds: 180,
@@ -175,53 +175,74 @@
 				// the URL to which the app should upload recorded sounds.
 				soundCloudTrackURL: "https://api.soundcloud.com/tracks.xml"
 			};
-			
+
 			// insert the authorisation variables into the flashVars object.
 			appendAuthorisationFlashVars(flashVars);
-			
+
 			var params = {
 				menu: "false",
 				scale: "noScale",
 				allowFullscreen: "true",
 				allowScriptAccess: "always",
 				bgcolor: "",
-				wmode: "direct" // can cause issues with FP settings & webcam
+				wmode: "transparent" // so DOM content appears over the top of SWF content
 			};
-			
+
 			var attributes = {
-				id:"soundcloudrecorder"
+				id:"soundcloud-recorder"
 			};
-			
+
 			// embed the SWF.
 			swfobject.embedSWF(
-				"soundcloudrecorder.swf", 
-				"altContent", "100%", "100%", "10.0.0", 
-				"expressInstall.swf", 
+				"soundcloud-recorder.swf",
+				"alt-content", "100%", "100%", "10.0.0",
+				"expressInstall.swf",
 				flashVars, params, attributes);
 		}
 	</script>
 	<style>
 		html, body { height:100%; overflow:hidden; }
 		body { margin:0; }
+
+		#github {
+			right: 1em;
+			top: 1em;
+			position: absolute;
+		}
+
+		#github p {
+			margin: 0;
+		}
+
+		#alt-content {
+			margin-left: 1em;
+		}
+
+		#flash-content {
+			height: 100%;
+		}
 	</style>
 	<script type="text/javascript">
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-32718610-1']);
-	  _gaq.push(['_setDomainName', 'stuartkeith.com']);
-	  _gaq.push(['_trackPageview']);
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-32718610-1']);
+		_gaq.push(['_setDomainName', 'stuartkeith.com']);
+		_gaq.push(['_trackPageview']);
 
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
 	</script>
 </head>
 <body>
-	<div id="altContent">
-		<h1>SoundCloud Recorder</h1>
-		<p>It appears that you do not have the Adobe Flash played installed.</p>
-		<p><a href="http://www.adobe.com/go/getflashplayer">Please install the Adobe Flash player</a>.</p>
+	<div id="flash-content">
+		<div id="alt-content">
+			<h1>SoundCloud Recorder</h1>
+			<p>It appears that you do not have the Adobe Flash played installed.</p>
+			<p><a href="http://www.adobe.com/go/getflashplayer">Please install the Adobe Flash player</a>.</p>
+		</div>
 	</div>
+	<div id="github"><p><strong>SoundCloud Recorder</strong> by <a href="http://stuartkeith.com" target="_blank">Stuart Keith</a>. Source at <a href="https://github.com/stuartkeith/soundcloud-recorder" target="_blank">GitHub</a>.</p></div>
 </body>
 </html>
