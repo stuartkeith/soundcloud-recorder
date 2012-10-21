@@ -28,7 +28,7 @@ reasons. See http://wonderfl.net/c/zKzb/
 
 Configuration (maximum recording time, SoundClient client ID, required URLs) is
 specified in index.html, so the Flash content does not need to be rebuilt if
-configuration needs change.
+configuration needs to be changed.
 
 
 Libraries
