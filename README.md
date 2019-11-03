@@ -16,8 +16,6 @@ SoundCloud page, or they may go back and record another sound.
 
 The user must first grant the application access to their SoundCloud account.
 
-It is available to use online: http://soundcloud-recorder.stuartkeith.com/
-
 If the user is on a mobile device, they are presented with a webpage containing
 a link to the relevant official SoundCloud app for their device. If the user is
 not on a mobile device and they do not have Flash installed, they are given
